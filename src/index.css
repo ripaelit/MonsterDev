@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,500;1,600;1,700;1,800;1,900&family=Text+Me+One&display=swap');
+
+
+body{
+    /* background-color: rgb(); */
+    background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(./Data/Space_background.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+font-family: 'Text Me One', sans-serif;
+}
+
+.homeText { 
+  font-family: 'Poppins', sans-serif;
+font-family: 'Text Me One', sans-serif;
+white-space: pre-line;
+padding-top: 150px;
+}
+
+.navbar{
+    background-color: rgb(37, 38, 52);
+}
+
+body::-webkit-scrollbar {
+    width: 0.5em;
+  }
+   
+  body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+   
+  body::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
