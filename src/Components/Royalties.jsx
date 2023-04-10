@@ -6,7 +6,7 @@ const Royalties = () => {
   return (
     <div className='flex flex-col items-center justify-center h-screen gap-6'>
         <div className='border border-2 border-gray-300 w-fit'>
-            <h2 className='text-3xl font-bold text-center py-5 px-9 text-primary'>Royalities </h2>
+            <h2 className='text-3xl font-bold text-center py-5 px-9 text-primary'>Royalties </h2>
 
         </div>
         <div className='text-2xl font-bold'>

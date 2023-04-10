@@ -8,8 +8,8 @@ export const navLinks = [
       path: "/mint",
     },
     {
-      name: "Royalities",
-      path: "/royalities",
+      name: "Royalties",
+      path: "/royalties",
     },
     {
       name: "NFT viewer",
@@ -20,10 +20,10 @@ export const navLinks = [
   export const socialLinks = [
     {
         name: "Discord",
-        path : "https://www.discord.com"
+        path : "https://discord.com/invite/UHhgPsfny5"
     },
     {
         name: "Twitter",
-        path : "https://www.twitter.com"
+        path : "https://twitter.com/CrazzzyMonsters"
     },
   ]

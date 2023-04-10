@@ -47,13 +47,13 @@ const Header = () => {
               </li>
             ))}
             <li>
-              <a href="https://www.discord.com" target="_blank">
+              <a href="https://discord.com/invite/UHhgPsfny5" target="_blank">
                 <FaDiscord className="text-3xl hover:text-indigo-600 transition ease-in-out" />
               </a>
             </li>
 
             <li>
-              <a href="https://www.twitter.com" target="_blank">
+              <a href="https://twitter.com/CrazzzyMonsters" target="_blank">
                 <FaTwitter className="text-3xl hover:text-blue-600 transition ease-in-out" />
               </a>
             </li>

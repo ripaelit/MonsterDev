@@ -6,7 +6,6 @@
 
 
 body{
-    /* background-color: rgb(); */
     background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(./Data/Space_background.png);
     background-size: cover;
     background-repeat: no-repeat;
@@ -19,8 +18,6 @@ font-family: 'Text Me One', sans-serif;
 .homeText { 
   font-family: 'Poppins', sans-serif;
 font-family: 'Text Me One', sans-serif;
-white-space: pre-line;
-padding-top: 150px;
 }
 
 .navbar{

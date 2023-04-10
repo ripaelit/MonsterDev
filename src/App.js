@@ -22,7 +22,7 @@ function App() {
             }
           ></Route>
           <Route path="/nftviewer" element={<NftViewer />} />
-          <Route path="/royalities" element={<Royalties />} />
+          <Route path="/royalties" element={<Royalties />} />
           <Route path="/mint" element={<Minting />} />
         </Routes>
         <Footer />
