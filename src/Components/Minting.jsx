@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Nft from "../Resource/Nft.jpg";
+import BigNumber from 'bignumber.js'
 const ethers = require('ethers');
 
 const Minting = () => {
@@ -10,7 +11,9 @@ const Minting = () => {
     return state.user.address
   })
 
-  const nftContract = ""
+  const nftContract = useSelector((state) => {
+    return state.user.monsterContract
+  })
 
   const increaseMintCount = () => {
     setMintCount((prev) => prev + 1)
@@ -22,15 +25,19 @@ const Minting = () => {
     }
   }
 
-  // const mintMonster = async () => {
-  //   console.log("mint monster")
-  //   const mintPrice = await nftContract.mintCost(walletAddress)
-  //   const sendValue = (mintCount * mintPrice).toString()
-  //   const tx = await nftContract.mint(mintCount, {
-  //     value: ethers.utils.parseEther(sendValue)
-  //   })
-  //   await tx.wait()
-  // }
+  const mintMonster = async () => {
+    console.log("mint monster")
+    if (!nftContract) {
+      console.log("nftContract is null")
+      return;
+    }
+    const mintValue = await nftContract.quoteMintValue(mintCount)
+    console.log("mintValue", mintValue, mintValue.toString(), "mintCount", mintCount)
+    const tx = await nftContract.mint(mintCount, {
+      value: mintValue
+    })
+    await tx.wait()
+  }
 
   return (
     <div className='pt-32'>
@@ -56,7 +63,7 @@ const Minting = () => {
             <button onClick={increaseMintCount} className='p-1 text-3xl font-bold text-black rounded-xl px-6 bg-gray-400 hover:bg-secondary transition-all ease-in-out active:text-2xl '>+</button>
           </div>
             <button
-              // onClick={mintMonster}
+              onClick={mintMonster}
               className="px-12 py-3 bg-primary hover:text-2xl transition-all ease-in-out font-bold uppercase rounded-lg text-xl"
             >
               Mint Monster
