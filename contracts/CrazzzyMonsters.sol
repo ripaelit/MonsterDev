@@ -73,12 +73,7 @@ contract CrazzzyMonsters is ERC721Enumerable, ERC2981, Ownable, ReentrancyGuard{
         _setDefaultRoyalty(receiver, feeNumerator);
     }
 
-    function mint(uint256 amount) public payable {
-        require(!paused, "paused");
-        require(block.timestamp >= publicTimestamp, "Mint is not live yet");
-        require(amount > 0 && amount <= 25, "Invalid amount");
-        uint256 supply = totalSupply();
-        require(supply + amount <= maxSupply, "Max supply exceeded");
+    function quoteMintValue(uint256 amount) public view returns (uint256 mintValue) {
         uint256 amountNormal = amount;
         uint256 amountDiscount = 0;
 
@@ -94,7 +89,18 @@ contract CrazzzyMonsters is ERC721Enumerable, ERC2981, Ownable, ReentrancyGuard{
                 }
             }
         }
-        require(msg.value >= cost * amountNormal + wlCost * amountDiscount, "insufficient funds");
+
+        mintValue = cost * amountNormal + wlCost * amountDiscount;
+    }
+
+    function mint(uint256 amount) public payable {
+        require(!paused, "paused");
+        require(block.timestamp >= publicTimestamp, "Mint is not live yet");
+        require(amount > 0 && amount <= 25, "Invalid amount");
+        uint256 supply = totalSupply();
+        require(supply + amount <= maxSupply, "Max supply exceeded");
+        uint256 mintValue = quoteMintValue(amount);
+        require(msg.value >= mintValue, "insufficient funds");
 
         for (uint256 i = 0; i < amount; i++) {
             _safeMint(msg.sender, _getNewId(supply+i));
