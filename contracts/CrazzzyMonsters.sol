@@ -77,8 +77,8 @@ contract CrazzzyMonsters is ERC721Enumerable, ERC2981, Ownable, ReentrancyGuard{
     function mint(uint256 amount) public payable {
         require(!paused, "paused");
         require(block.timestamp >= publicTimestamp, "Mint is not live yet");
-        require(amount > 0, "amount can't be zero");
-                uint256 supply = totalSupply();
+        require(amount > 0 && amount <= 25, "Invalid amount");
+        uint256 supply = totalSupply();
         require(supply + amount <= maxSupply, "Max supply exceeded");
         uint256 price = cost;
         if ( whitelisted[msg.sender] )
