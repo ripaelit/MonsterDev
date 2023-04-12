@@ -7,7 +7,7 @@
 // export const ContractAddress = '0x3b930555ffCb54a312406D61ad74FE2732b7d28e'
 // export const TokenContractAddress = '0xe5D487dF63f2D613e64E4D1D908A70D02c82992b'
 
-export const ContractAddress = '0x47b2A92Cd85488F41A7139174347612c085Cde2a'
+export const ContractAddress = '0xf71d138Fc195f40785EEEAf1259C3A0eb48C6549'
 // export const TokenContractAddress = '0x1Cc0B25BD5105CD8905f7e9cD174435D4C890E02'
 
 //goerli CPT  token 0x2ebfba490C670473bA7D91a82F4097daC27D94B5
@@ -28,32 +28,32 @@ export const ContractAddress = '0x47b2A92Cd85488F41A7139174347612c085Cde2a'
 //   },
 // };
 //Mainnet
-export const chainConfig = {
-   chainId: "0x19",
-   chainName: "Cronos Mainnet Beta",
-   rpcUrls: ["https://evm.cronos.org/"],
-   iconUrls: ["https://cronoscan.com/images/brandassets/logo.jpg?v=22.12.2.0"],
-   blockExplorerUrls: ["https://cronoscan.com/"],
-   nativeCurrency: {
-     name: "Cronos",
-     symbol: "CRO",
-     decimals: 18,
-   }
- };
+// export const chainConfig = {
+//    chainId: "0x19",
+//    chainName: "Cronos Mainnet Beta",
+//    rpcUrls: ["https://evm.cronos.org/"],
+//    iconUrls: ["https://cronoscan.com/images/brandassets/logo.jpg?v=22.12.2.0"],
+//    blockExplorerUrls: ["https://cronoscan.com/"],
+//    nativeCurrency: {
+//      name: "Cronos",
+//      symbol: "CRO",
+//      decimals: 18,
+//    }
+//  };
 
 // Testnet
-//export const chainConfig = {
-  //chainId: '0x152',
-  //chainName: 'Cronos Testnet Beta',
-  //rpcUrls: ['https://evm-t3.cronos.org'],
-  //iconUrls: ['https://cronoscan.com/images/brandassets/logo.jpg?v=22.12.2.0'],
-  //blockExplorerUrls: ['https://cronos.crypto.org/explorer/testnet3/'],
-  //nativeCurrency: {
-  //  name: 'Cronos',
-  //  symbol: 'CRO',
-  //  decimals: 18
-  //}
-//}
+export const chainConfig = {
+  chainId: '0x152',
+  chainName: 'Cronos Testnet Beta',
+  rpcUrls: ['https://evm-t3.cronos.org'],
+  iconUrls: ['https://cronoscan.com/images/brandassets/logo.jpg?v=22.12.2.0'],
+  blockExplorerUrls: ['https://cronos.crypto.org/explorer/testnet3/'],
+  nativeCurrency: {
+   name: 'Cronos',
+   symbol: 'CRO',
+   decimals: 18
+  }
+}
 
 // Goerli Testnet
 
