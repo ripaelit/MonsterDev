@@ -29,7 +29,6 @@ contract CrazzzyMonsters is ERC721Enumerable, ERC2981, Ownable, ReentrancyGuard{
     address public royaltyWallet = 0x9D2349C58861287358905e133F28c5F0a5b687E3;
     uint256 constant SCALE = 1000;
     mapping(address => bool) public whitelisted;
-    uint256 public whitelistedCount;
 
     struct MintInfo {
         bool paused;
