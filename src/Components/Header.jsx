@@ -58,9 +58,12 @@ const Header = () => {
               </a>
             </li>
           </ul>
-          <div className="bg-primary px-4 py-2 cursor-pointer text-sm rounded-xl font-bold ">
+          <button
+            // onClick={web3Service.toggleConnect}
+            className="bg-primary px-4 py-2 cursor-pointer text-sm rounded-xl font-bold "
+          >
             Connect Wallet
-          </div>
+          </button>
         </div>
       </div>
 
