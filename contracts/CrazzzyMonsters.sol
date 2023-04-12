@@ -80,10 +80,23 @@ contract CrazzzyMonsters is ERC721Enumerable, ERC2981, Ownable, ReentrancyGuard{
         require(amount > 0 && amount <= 25, "Invalid amount");
         uint256 supply = totalSupply();
         require(supply + amount <= maxSupply, "Max supply exceeded");
-        uint256 price = cost;
-        if ( whitelisted[msg.sender] )
-            price = wlCost;
-        require(msg.value >= price * amount, "insufficient funds");
+        uint256 amountNormal = amount;
+        uint256 amountDiscount = 0;
+
+        if (whitelisted[msg.sender]) {
+            if (balanceOf(msg.sender) < 25) {
+                if (balanceOf(msg.sender) + amount < 25) {
+                    amountDiscount = amount;
+                    amountNormal = 0;
+                }
+                else {
+                    amountDiscount = 25 - balanceOf(msg.sender);
+                    amountNormal = amount - amountDiscount;
+                }
+            }
+        }
+        require(msg.value >= cost * amountNormal + wlCost * amountDiscount, "insufficient funds");
+
         for (uint256 i = 0; i < amount; i++) {
             _safeMint(msg.sender, _getNewId(supply+i));
         }
