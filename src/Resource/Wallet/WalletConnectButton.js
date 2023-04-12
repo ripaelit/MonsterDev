@@ -120,43 +120,60 @@ const WalletConnectButton = () => {
   }
 
   return (
-    <div>
-      {!walletAddress && (
-        <button
-          className={styles.WalletClickButton}
-          onClick={() => connectWalletPressed()}
-        >
-          Connect Wallet
-        </button>
-      )}
-      {walletAddress && !correctChain && !user.showWrongChainModal && (
-        <button
-          className={styles.WalletClickButton}
-          onClick={() => onWrongChainModalChangeChain()}
-        >
-          Switch Network
-        </button>
-      )}
+    <button
+      onClick={() => {
+        if (!walletAddress) {
+          connectWalletPressed()
+        }
+        else {
+          // if (!correctChain && !user.showWrongChainModal) {
+          //   onWrongChainModalChangeChain()
+          // }
+          logout()
+        }
+        // if (!context.account) handleWallet();
+      }}
+      className="bg-primary px-4 py-2 cursor-pointer text-sm rounded-xl font-bold "
+    >
+      {!walletAddress ? "Connect Wallet" : walletAddress.substr(0,12)+"..."}
+    </button> 
+    // <div>
+    //   {!walletAddress && (
+    //     <button
+    //       className={styles.WalletClickButton}
+    //       onClick={() => connectWalletPressed()}
+    //     >
+    //       Connect Wallet
+    //     </button>
+    //   )}
+    //   {walletAddress && !correctChain && !user.showWrongChainModal && (
+    //     <button
+    //       className={styles.WalletClickButton}
+    //       onClick={() => onWrongChainModalChangeChain()}
+    //     >
+    //       Switch Network
+    //     </button>
+    //   )}
 
-      {walletAddress && (
-        <div className={styles.walletButtonContainer}>
-          {
-            isMobile ? <button className={styles.WalletButton} onClick={() => logout()}>
-              {walletAddress.substr(0, 6) +
-                '...' +
-                walletAddress.substr(walletAddress.length - 4, 4)}
-            </button> : bought >= 0 && <div className={styles.boughtText}>{bought} TICKET(S) BOUGHT</div>
-          }
-          {
-            isMobile ? bought >= 0 && <div className={styles.boughtText}>{bought} TICKET(S) BOUGHT</div> : <button className={styles.WalletButton} onClick={() => logout()}>
-              {walletAddress.substr(0, 6) +
-                '...' +
-                walletAddress.substr(walletAddress.length - 4, 4)}
-            </button>
-          }
-        </div>
-      )}
-    </div>
+    //   {walletAddress && (
+    //     <div className={styles.walletButtonContainer}>
+    //       {
+    //         isMobile ? <button className={styles.WalletButton} onClick={() => logout()}>
+    //           {walletAddress.substr(0, 6) +
+    //             '...' +
+    //             walletAddress.substr(walletAddress.length - 4, 4)}
+    //         </button> : bought >= 0 && <div className={styles.boughtText}>{bought} TICKET(S) BOUGHT</div>
+    //       }
+    //       {
+    //         isMobile ? bought >= 0 && <div className={styles.boughtText}>{bought} TICKET(S) BOUGHT</div> : <button className={styles.WalletButton} onClick={() => logout()}>
+    //           {walletAddress.substr(0, 6) +
+    //             '...' +
+    //             walletAddress.substr(walletAddress.length - 4, 4)}
+    //         </button>
+    //       }
+    //     </div>
+    //   )}
+    // </div>
   )
 }
 export default memo(WalletConnectButton)
