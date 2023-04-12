@@ -31,16 +31,6 @@ const getHDWallet = () => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  networks: {
-    cronos: {
-      url: "http://localhost:8545",
-      accounts: getHDWallet(),
-    },
-  },
-  solidity: "0.8.4",
-};
-
-module.exports = {
   defaultNetwork: 'cronosTest',
   solidity: {
     version: '0.8.17',
@@ -77,7 +67,10 @@ module.exports = {
     timeout: 40000000000000
   },
   etherscan: {
-    apiKey: `${process.env.ETHERSCAN_API_KEY}`,
+    apikey: {
+      cronosTest: `${process.env.CRONOSCAN_TESTNET_API_KEY}`,
+      // cronos: `${process.env.CRONOSCAN_API_KEY}`,
+    },
     customChains: [
       {
         network: "cronosTest",
@@ -88,5 +81,5 @@ module.exports = {
         }
       }
     ]
-  }
+  },
 }
