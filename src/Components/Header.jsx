@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
 import { ethers } from 'ethers'
+import WalletConnectButton from '../Resource/Wallet/WalletConnectButton'
 // import { useDispatch, useSelector } from 'react-redux'
 import {
   FaBars,
@@ -94,7 +95,7 @@ const Header = () => {
           </ul>
           <button
             onClick={() => {
-              // if (!context.account) handleWallet();
+              
             }}
             className="bg-primary px-4 py-2 cursor-pointer text-sm rounded-xl font-bold "
           >
