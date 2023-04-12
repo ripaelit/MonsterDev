@@ -1,21 +1,31 @@
 import React, { useState } from 'react'
 import Nft from "../Resource/Nft.jpg";
+const ethers = require('ethers');
 
 const Minting = () => {
-  const [mintValue, setMintValue] = useState(0)
+  const [mintCount, setMintCount] = useState(0)
 
-  const increaseMintValue = () => {
-    setMintValue((prev) => prev + 1)
+  const walletAddress = ""
+  const nftContract = ""
+
+  const increaseMintCount = () => {
+    setMintCount((prev) => prev + 1)
   }
 
-  const decreaseMintValue = () => {
-    if(mintValue !== 0){
-      setMintValue((prev) => prev - 1)
+  const decreaseMintCount = () => {
+    if(mintCount !== 0){
+      setMintCount((prev) => prev - 1)
     }
   }
 
-  const mintMonster = () => {
-
+  const mintMonster = async () => {
+    console.log("mint monster")
+    const mintPrice = await nftContract.mintCost(walletAddress)
+    const sendValue = (mintCount * mintPrice).toString()
+    const tx = await nftContract.mint(mintCount, {
+      value: ethers.utils.parseEther(sendValue)
+    })
+    await tx.wait()
   }
 
   return (
@@ -37,9 +47,9 @@ const Minting = () => {
           </div>
           <div>
           <div className='flex flex-row items-center justify-center gap-6 pt-4 pb-4'>
-          <button onClick={decreaseMintValue} className='p-1 text-3xl font-bold text-black rounded-xl px-6 bg-gray-400 hover:bg-secondary transition-all ease-in-out active:text-2xl '>-</button>
-            <div className={mintValue !== 0 ? 'text-4xl font-bold text-primary' : 'text-3xl font-bold'}>{mintValue}</div>
-            <button onClick={increaseMintValue} className='p-1 text-3xl font-bold text-black rounded-xl px-6 bg-gray-400 hover:bg-secondary transition-all ease-in-out active:text-2xl '>+</button>
+          <button onClick={decreaseMintCount} className='p-1 text-3xl font-bold text-black rounded-xl px-6 bg-gray-400 hover:bg-secondary transition-all ease-in-out active:text-2xl '>-</button>
+            <div className={mintCount !== 0 ? 'text-4xl font-bold text-primary' : 'text-3xl font-bold'}>{mintCount}</div>
+            <button onClick={increaseMintCount} className='p-1 text-3xl font-bold text-black rounded-xl px-6 bg-gray-400 hover:bg-secondary transition-all ease-in-out active:text-2xl '>+</button>
           </div>
             <button onClick={mintMonster} className="px-12 py-3 bg-primary hover:text-2xl transition-all ease-in-out font-bold uppercase rounded-lg text-xl">
               Mint Monster
