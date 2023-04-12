@@ -28,8 +28,8 @@ const userSlice = createSlice({
     gettingContractData: true,
     needsOnboard: false,
     // Contracts
-    buyContract: null,
-    tokenContract: null,
+    monsterContract: null,
+    // tokenContract: null,
     correctChain: false,
     showWrongChainModal: false,
     isMetamask: false
@@ -38,10 +38,10 @@ const userSlice = createSlice({
     accountChanged(state, action) {
       state.balance = action.payload.balance
       // TODO: QUICKFIX. Need to make as independent reducers later.
-      if (action.payload.buyContract)
-        state.buyContract = action.payload.buyContract
-      if (action.payload.tokenContract)
-        state.tokenContract = action.payload.tokenContract
+      if (action.payload.monsterContract)
+        state.monsterContract = action.payload.monsterContract
+      // if (action.payload.tokenContract)
+      //   state.tokenContract = action.payload.tokenContract
     },
 
     setIsMetamask(state, action) {
@@ -191,7 +191,7 @@ export const connectAccount =
         return null
       })
 
-    console.log('web3provider:', web3provider)
+    console.log('web3provider:::', web3provider)
 
     if (!web3provider) {
       dispatch(onLogout())
@@ -215,6 +215,7 @@ export const connectAccount =
         method: 'eth_accounts',
         params: [{ chainId: cid }]
       })
+      console.log("account:::", accounts[0])
       const address = accounts[0]
       const signer = provider.getSigner()
 
@@ -263,11 +264,11 @@ export const connectAccount =
       })
 
       let balance
-      let buyContract
-      let tokenContract
+      let monsterContract
+      // let tokenContract
 
       if (signer && correctChain) {
-        buyContract = new Contract(ContractAddress, abi, signer)
+        monsterContract = new Contract(ContractAddress, abi, signer)
         // tokenContract = new Contract(TokenContractAddress, tokenAbi, signer)
 
         try {
@@ -285,8 +286,8 @@ export const connectAccount =
           needsOnboard: false,
           correctChain: correctChain,
           balance: balance,
-          buyContract,
-          tokenContract
+          monsterContract
+          // tokenContract
         })
       )
     } catch (error) {
