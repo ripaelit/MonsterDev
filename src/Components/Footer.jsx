@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { navLinks, socialLinks } from "../Data/data";
-import Logo from "../Data/logo.png";
-import PolicyPdf from "../Data/Policy.pdf";
+import { navLinks, socialLinks } from "../Resource/data";
+import Logo from "../Resource/logo.png";
+import PolicyPdf from "../Resource/Policy.pdf";
 
 const Footer = () => {
   const handleOpenPdf = () => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Nft from "../Data/Nft.jpg";
+import Nft from "../Resource/Nft.jpg";
 
 const Minting = () => {
   const [mintValue, setMintValue] = useState(0)

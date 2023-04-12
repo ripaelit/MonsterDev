@@ -6,7 +6,7 @@
 
 
 body{
-    background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(./Data/Space_background.png);
+    background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(./Resource/Space_background.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: scroll;
