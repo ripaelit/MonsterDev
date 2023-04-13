@@ -29,17 +29,17 @@ const Mintpage = () => {
   useEffect(() => {
     async function updatePrice() {
       if (!nftContract) {
-        console.log("userEffect: nftContract is null")
+        console.log("useEffect: nftContract is null")
         return;
       }
 
       if (!walletAddress) {
-        console.log("userEffect: walletAddress is null")
+        console.log("useEffect: walletAddress is null")
         return;
       }
 
       if (!provider) {
-        console.log("userEffect: provider is null")
+        console.log("useEffect: provider is null")
         return;
       }
 

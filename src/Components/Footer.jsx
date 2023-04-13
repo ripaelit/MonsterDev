@@ -23,7 +23,7 @@ const Footer = () => {
             Crazzzy Monsters
           </h1>
           {navLinks.map((link) => (
-            <Link to={link.path}>
+            <Link to={link.path} key={link.name}>
               <h2 className="hover:text-primary w-fit">{link.name}</h2>
             </Link>
           ))}
@@ -34,7 +34,7 @@ const Footer = () => {
             Social Links
           </h1>
           {socialLinks.map((link) => (
-            <Link to={link.path} target="_blank">
+            <Link to={link.path} target="_blank" key={link.name}>
               <h2 className="hover:text-primary w-fit">{link.name}</h2>
             </Link>
           ))}
@@ -45,12 +45,12 @@ const Footer = () => {
             Contact info
           </h1>
           <div>
-            <Link>
+            <Link key="terms">
               <h2 className="hover:text-primary w-fit" onClick={handleOpenPdf}>
                 Terms & Conditions
               </h2>
             </Link>
-            <Link>
+            <Link key="email">
               <h2 className="hover:text-primary w-fit">Email</h2>
             </Link>
           </div>

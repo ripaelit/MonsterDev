@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
@@ -13,7 +13,7 @@ import {
 import { AiOutlineClose } from "react-icons/ai";
 import { navLinks } from "../Resource/data";
 import Logo from "../Resource/images/logo.png";
-import WalletConnectButton from './Wallet/WalletConnectButton'
+import WalletConnectButton from './Wallet/ConnectWalletButton'
 
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
 const injected = injectedModule()
@@ -65,7 +65,7 @@ const Header = () => {
         <div className="hidden md:flex  gap-12 items-center justify-between text-lg">
           <ul className="inline-flex items-center gap-6 lg:gap-12 font-bold  uppercase">
             {navLinks.map((link) => (
-              <li className="hover:text-secondary transition ease-in-out">
+              <li className="hover:text-secondary transition ease-in-out" key={link.name}>
                 <Link
                   className={link.path == pathname && "text-secondary"}
                   to={link.path}
@@ -74,13 +74,12 @@ const Header = () => {
                 </Link>
               </li>
             ))}
-            <li>
+            <li key="discord-desktop">
               <a href="https://discord.com/invite/UHhgPsfny5" target="_blank">
                 <FaDiscord className="text-3xl hover:text-indigo-600 transition ease-in-out" />
               </a>
             </li>
-
-            <li>
+            <li key="twitter-desktop">
               <a href="https://twitter.com/CrazzzyMonsters" target="_blank">
                 <FaTwitter className="text-3xl hover:text-blue-600 transition ease-in-out" />
               </a>
@@ -111,6 +110,7 @@ const Header = () => {
               <li
                 onClick={() => setShowMobMenu(false)}
                 className="hover:text-primary transition ease-in-out"
+                key={link.name}
               >
                 <Link
                   className={pathname == link.path && "text-primary"}
@@ -120,13 +120,12 @@ const Header = () => {
                 </Link>
               </li>
             ))}
-            <li>
+            <li key="discord-mobile">
               <a href="www.discord.com" target="_blank">
                 <FaDiscord className="text-3xl hover:text-indigo-600 transition ease-in-out" />
               </a>
             </li>
-
-            <li>
+            <li key="twitter-mobile">
               <a href="www.twitter.com" target="_blank">
                 <FaTwitter className="text-3xl hover:text-blue-600 transition ease-in-out" />
               </a>
