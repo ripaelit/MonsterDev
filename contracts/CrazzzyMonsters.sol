@@ -190,32 +190,13 @@ contract CrazzzyMonsters is ERC721Enumerable, ERC2981, Ownable, ReentrancyGuard{
         wlCost = _newCost;
     }
 
-    function setWhitelisted(address _address, bool _whitelisted)
-        public
-        onlyOwner
-    {
-        if (whitelisted[_address] == _whitelisted) {
-            return;
-        }
+    function setWhitelisted(address _address, bool _whitelisted) public onlyOwner {
         whitelisted[_address] = _whitelisted;
-        if (_whitelisted == true) {
-            ++whitelistedCount;
-        }
-        else {
-            --whitelistedCount;
-        }
     }
 
     function setWhitelistAddresses(address[] memory addresses) public onlyOwner {
-        require(whitelistedCount + addresses.length <= 25, "Whitelist size cannot exceed 25");
         for (uint i = 0; i < addresses.length; i++) {
-            if (whitelisted[addresses[i]] == true) {
-                continue;
-            }
-            else {
-                whitelisted[addresses[i]] = true;
-                ++whitelistedCount;
-            }
+            whitelisted[addresses[i]] = true;
         }
     }
 
