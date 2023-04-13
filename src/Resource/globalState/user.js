@@ -261,16 +261,13 @@ export const connectAccount =
 
       let balance
       let monsterContract
-      // let tokenContract
 
       if (signer && correctChain) {
         monsterContract = new Contract(ContractAddress, abi, signer)
-        // tokenContract = new Contract(TokenContractAddress, tokenAbi, signer)
 
         try {
           balance = ethers.utils.formatEther(await provider.getBalance(address))
         } catch (error) {
-          // console.log('Error checking CRO balance', error)
         }
       }
 

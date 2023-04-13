@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import {FaTwitter, FaDiscord, FaLink} from "react-icons/fa"
 
-const Royalties = () => {
+const Royaltiespage = () => {
   return (
     <div className='flex flex-col items-center justify-center h-screen gap-6'>
         <div className='border border-2 border-gray-300 w-fit'>
@@ -50,4 +50,4 @@ const Royalties = () => {
   )
 }
 
-export default Royalties
+export default Royaltiespage

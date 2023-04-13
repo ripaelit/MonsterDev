@@ -23,7 +23,7 @@ const walletNfts = [
   },
 ]
 
-const NftViewer = () => {
+const NftViewerpage = () => {
   return (
     <div className='flex items-center justify-center flex-col h-screen'>
         
@@ -48,4 +48,4 @@ const NftViewer = () => {
   )
 }
 
-export default NftViewer
+export default NftViewerpage

@@ -4,7 +4,7 @@ import Nft from "../Resource/images/Nft.jpg";
 import BigNumber from 'bignumber.js'
 const ethers = require('ethers');
 
-const Minting = () => {
+const Mintpage = () => {
   const [mintCount, setMintCount] = useState(0)
 
   const walletAddress = useSelector((state) => {
@@ -145,4 +145,4 @@ const Minting = () => {
   )
 }
 
-export default Minting
+export default Mintpage
