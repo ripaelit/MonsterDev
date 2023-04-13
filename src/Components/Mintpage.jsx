@@ -90,8 +90,10 @@ const Mintpage = () => {
         {/* Details */}
         <div className="text-center pb-6 space-y-4">
           <div className="text-3xl">
-            <span className="font-bold text-secondary">Total Supply: </span>
-            <span>10000</span>
+          <div className="text-3xl">
+            <span className="font-bold text-secondary">Minted : </span>
+            <span>{supply}</span>
+          </div>
           </div>
           <div className="text-3xl">
             <span className="font-bold text-secondary">Current Price: </span>
