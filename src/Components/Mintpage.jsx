@@ -6,7 +6,7 @@ const ethers = require('ethers');
 
 const Mintpage = () => {
   const [mintCount, setMintCount] = useState(0)
-  const [mintPrice, setMintPrice] = useState('0')
+  const [mintPrice, setMintPrice] = useState('60')
 
   const walletAddress = useSelector((state) => {
     return state.user.address
@@ -21,10 +21,13 @@ const Mintpage = () => {
       console.log("userEffect: nftContract is null")
       return;
     }
-    nftContract.mintCost(walletAddress.toString())
-      .then((price) => {
-        setMintPrice((new BigNumber(price.toString())).div((new BigNumber(10)).pow(18)).toString())
-        console.log("setMintPrice", price.toString())
+    nftContract.balanceOf(walletAddress.toString())
+      .then((balance) => {
+        if ((new BigNumber(balance.toString())).gt(25)) {
+          setMintPrice('60')
+        } else {
+          setMintPrice('45')
+        }
       })
   }, [walletAddress, nftContract])
 
