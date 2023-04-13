@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Onboard from '@web3-onboard/core'
+import injectedModule from '@web3-onboard/injected-wallets'
+import { ethers } from 'ethers'
+// import { useDispatch, useSelector } from 'react-redux'
 import {
   FaBars,
   FaCross,
@@ -8,14 +12,44 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
-import { navLinks } from "../Data/data";
-import Logo from "../Data/logo.png";
+import { navLinks } from "../Resource/data";
+import Logo from "../Resource/logo.png";
+// import {
+//   connectAccount,
+//   onLogout,
+//   setShowWrongChainModal,
+//   chainConnect
+// } from '../Resource/user'
+
+const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
+const injected = injectedModule()
+const onboard = Onboard({
+  wallets: [injected],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum Mainnet',
+      rpcUrl: MAINNET_RPC_URL
+    }
+  ]
+})
+// const wallets = onboard.connectWallet()
+// console.log(wallets)
+
 const Header = () => {
   const pathname = useLocation().pathname;
-
   const [showMobMenu, setShowMobMenu] = useState(false);
-
   const handleMenuClick = () => setShowMobMenu((prev) => !prev);
+  // const dispatch = useDispatch()
+  const connectWalletPressed = async () => {
+    // if (needsOnboard) {
+    //   const onboarding = new MetaMaskOnboarding()
+    //   onboarding.startOnboarding()
+    // } else {
+      // dispatch(connectAccount())
+    // }
+  }
 
   return (
     <div className="bg-secondaryDark fixed w-full shadow-xl">
@@ -59,7 +93,9 @@ const Header = () => {
             </li>
           </ul>
           <button
-            // onClick={web3Service.toggleConnect}
+            onClick={() => {
+              // if (!context.account) handleWallet();
+            }}
             className="bg-primary px-4 py-2 cursor-pointer text-sm rounded-xl font-bold "
           >
             Connect Wallet
