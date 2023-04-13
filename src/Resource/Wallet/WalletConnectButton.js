@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { providers, Contract } from 'ethers'
 import MetaMaskOnboarding from '@metamask/onboarding'
 import { ContractAddress, chainConfig } from '../../constants'
-import abi from '../../constants/abi.json'
+import abi from '../abi.json'
 import useMedia from '../../hooks/useMedia'
 
 import {
