@@ -45,6 +45,7 @@ const WalletConnectButton = () => {
   }
 
   useEffect(() => {
+    console.log("walletAddress:::", walletAddress)
     let defiLink = localStorage.getItem('DeFiLink_session_storage_extension')
     if (defiLink) {
       try {
@@ -99,7 +100,7 @@ const WalletConnectButton = () => {
         );
         lotteryContract.getUserTickets(walletAddress).then(userTickets => setBought(userTickets.toNumber()))
       } catch (err) {
-        console.log('Error getting endtime:', err)
+        // console.log('Error getting endtime:', err)
       }
     }
     init()
@@ -149,7 +150,6 @@ const WalletConnectButton = () => {
                 walletAddress.substr(walletAddress.length - 4, 4)}
             </button>
           }
-
         </div>
       )}
     </div>

@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import Nft from "../Resource/Nft.jpg";
 const ethers = require('ethers');
 
 const Minting = () => {
   const [mintCount, setMintCount] = useState(0)
 
-  const walletAddress = ""
+  const walletAddress = useSelector((state) => {
+    return state.user.address
+  })
+
   const nftContract = ""
 
   const increaseMintCount = () => {
