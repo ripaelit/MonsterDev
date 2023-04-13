@@ -2,18 +2,12 @@ import { memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { providers, Contract } from 'ethers'
 import MetaMaskOnboarding from '@metamask/onboarding'
-import { ContractAddress, chainConfig } from '../../constants'
-import abi from '../../constants/abi.json'
-import useMedia from '../../hooks/useMedia'
+import { ContractAddress, chainConfig } from '../constants'
+import abi from '../abi.json'
+import useMedia from '../hooks/useMedia'
+import { connectAccount, onLogout, setShowWrongChainModal, chainConnect } from '../globalState/user'
 
-import {
-  connectAccount,
-  onLogout,
-  setShowWrongChainModal,
-  chainConnect
-} from '../../globalState/user'
-
-import styles from '../../styles/Component.module.scss'
+import styles from '../Component.module.scss'
 
 let lotteryContract, provider
 
