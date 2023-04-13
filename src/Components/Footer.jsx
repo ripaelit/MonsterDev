@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { navLinks, socialLinks } from "../Resource/data";
-import Logo from "../Resource/logo.png";
+import Logo from "../Resource/images/logo.png";
 import PolicyPdf from "../Resource/Policy.pdf";
 
 const Footer = () => {

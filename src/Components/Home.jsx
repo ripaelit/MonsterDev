@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import HomeBanner from "../Resource/HomeBanner.jpg"
+import HomeBanner from "../Resource/images/HomeBanner.jpg"
 
 const Home = () => {
   return (

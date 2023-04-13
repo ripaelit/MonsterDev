@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import { navLinks } from "../Resource/data";
-import Logo from "../Resource/logo.png";
+import Logo from "../Resource/images/logo.png";
 // import {
 //   connectAccount,
 //   onLogout,

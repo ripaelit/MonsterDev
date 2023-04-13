@@ -1,8 +1,8 @@
 import React from 'react'
-import Nft1 from "../Resource/Nft (1).png"
-import Nft2 from "../Resource/Nft (2).png"
-import Nft3 from "../Resource/Nft (3).png"
-import Nft4 from "../Resource/Nft (4).png"
+import Nft1 from "../Resource/images/Nft (1).png"
+import Nft2 from "../Resource/images/Nft (2).png"
+import Nft3 from "../Resource/images/Nft (3).png"
+import Nft4 from "../Resource/images/Nft (4).png"
 
 const walletNfts = [
   {

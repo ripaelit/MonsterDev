@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import Nft from "../Resource/Nft.jpg";
+import Nft from "../Resource/images/Nft.jpg";
 import BigNumber from 'bignumber.js'
 const ethers = require('ethers');
 
