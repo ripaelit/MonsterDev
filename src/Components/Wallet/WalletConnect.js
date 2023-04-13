@@ -3,7 +3,6 @@ import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-
 import * as walletMetamask from '../../Resource/helpers/wallet-metamask'
 import * as walletConnect from '../../Resource/helpers/wallet-connect'
 import * as walletDefiwallet from '../../Resource/helpers/wallet-defiwallet'
