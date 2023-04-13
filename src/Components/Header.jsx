@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
-import { ethers } from 'ethers'
 // import { useDispatch, useSelector } from 'react-redux'
 import {
   FaBars,
@@ -20,7 +19,7 @@ import Logo from "../Resource/logo.png";
 //   setShowWrongChainModal,
 //   chainConnect
 // } from '../Resource/user'
-import WalletConnectButton from '../Resource/Wallet/WalletConnectButton'
+import WalletConnectButton from './Wallet/WalletConnectButton'
 
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
 const injected = injectedModule()
