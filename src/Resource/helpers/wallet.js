@@ -1,6 +1,7 @@
 import * as ethers from "ethers";
 import abi from "../abi.json";
 import Web3 from "web3"
+import { ContractAddress } from '../constants'
 
 // connect to metamask using web3
 export const connectWallet = async () => {
@@ -32,7 +33,7 @@ export const connectContract = async () => {
   const { ethereum } = window;
   const web3 = new Web3(ethereum);
   if (ethereum) {
-    window.contract = await new web3.eth.Contract(abi, '0x08E36fbF872E706EC76093DFFcc4B5f035200573');
+    window.contract = await new web3.eth.Contract(abi, ContractAddress);
 
     //set up your Ethereum transaction
 
@@ -97,7 +98,7 @@ export const mintNFT = async (count = 1) => {
           method: 'eth_sendTransaction',
           params: [{
             from: window.ethereum.selectedAddress,
-            to: '0x08E36fbF872E706EC76093DFFcc4B5f035200573',
+            to: ContractAddress,
             gas: '0x105208',
             data: window.contract
               .methods
@@ -145,7 +146,7 @@ export const init = async () => {
   const web3 = new Web3(provider);
   const networkId = await web3.eth.net.getId();
   if (networkId === 338 || networkId === 25) {
-    const contract = new web3.eth.Contract(abi, '0x08E36fbF872E706EC76093DFFcc4B5f035200573');
+    const contract = new web3.eth.Contract(abi, ContractAddress);
     return { web3, networkId, contract };
   } else {
     // // ask to switch network
