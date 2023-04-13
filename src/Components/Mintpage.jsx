@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Nft from "../Resource/images/Nft.jpg";
 import BigNumber from 'bignumber.js'
@@ -6,6 +6,7 @@ const ethers = require('ethers');
 
 const Mintpage = () => {
   const [mintCount, setMintCount] = useState(0)
+  const [mintPrice, setMintPrice] = useState('0')
 
   const walletAddress = useSelector((state) => {
     return state.user.address
@@ -14,6 +15,18 @@ const Mintpage = () => {
   const nftContract = useSelector((state) => {
     return state.user.monsterContract
   })
+
+  useEffect(() => {
+    if (!nftContract) {
+      console.log("userEffect: nftContract is null")
+      return;
+    }
+    nftContract.mintCost(walletAddress.toString())
+      .then((price) => {
+        setMintPrice((new BigNumber(price.toString())).div((new BigNumber(10)).pow(18)).toString())
+        console.log("setMintPrice", price.toString())
+      })
+  }, [walletAddress, nftContract])
 
   const increaseMintCount = () => {
     setMintCount((prev) => (prev < 25) ? (prev + 1) : prev)
@@ -51,7 +64,7 @@ const Mintpage = () => {
           </div>
           <div className="text-3xl">
             <span className="font-bold text-secondary">Current Price: </span>
-            <span>60 CRO</span>
+            <span>{mintPrice} CRO</span>
           </div>
           <div>
           <div className='flex flex-row items-center justify-center gap-6 pt-4 pb-4'>
