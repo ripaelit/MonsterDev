@@ -23,7 +23,38 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
     "web3": "^1.9.0",
-    "web3modal": "^1.9.12"
+    "web3modal": "^1.9.12",
+    "@deficonnect/web3-provider": "^1.6.14-dev.2",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/lab": "^5.0.0-alpha.114",
+    "@mui/material": "^5.11.3",
+    "@nomiclabs/hardhat-waffle": "^2.0.2",
+    "@openzeppelin/contracts": "^4.5.0",
+    "@sentry/react": "^7.29.0",
+    "@web3-onboard/coinbase": "^2.0.0",
+    "@web3-onboard/fortmatic": "^2.0.2",
+    "@web3-onboard/react": "^2.1.1",
+    "@web3-onboard/walletconnect": "^2.0.1",
+    "bignumber.js": "^9.1.1",
+    "chai": "^4.3.6",
+    "deficonnect": "^1.6.14-dev.2",
+    "dotenv": "^16.0.0",
+    "ethereum-waffle": "^3.4.0",
+    "hardhat": "^2.8.4",
+    "keccak256": "^1.0.6",
+    "merkletreejs": "^0.2.30",
+    "next": "12.1.0",
+    "react-burger-menu": "^3.0.9",
+    "react-countdown": "^2.3.5",
+    "react-toastify": "^9.1.1",
+    "redux": "^4.2.0",
+    "redux-sentry-middleware": "^0.2.2",
+    "redux-thunk": "^2.4.2",
+    "sass": "^1.57.1",
+    "web3-eth-contract": "^1.8.1",
+    "witnet-solidity-bridge": "^0.6.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -50,6 +81,7 @@
     ]
   },
   "devDependencies": {
-    "tailwindcss": "^3.3.1"
+    "tailwindcss": "^3.3.1",
+    "postcss": "^8.4.7"
   }
 }
