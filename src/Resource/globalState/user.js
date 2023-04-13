@@ -145,9 +145,9 @@ export const connectAccount =
       providerOptions.walletconnect = {
         package: WalletConnectProvider, // required
         options: {
-          chainId: 338,
+          chainId: 25,
           rpc: {
-            338: 'https://evm-t3.cronos.org'
+            25: 'https://evm-t3.cronos.org'
           },
           network: 'cronos',
           metadata: {
