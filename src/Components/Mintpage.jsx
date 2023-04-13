@@ -123,7 +123,7 @@ const Mintpage = () => {
                   <p className="font-semibold ">Max mint per tx</p>
                 </td>
                 <td>
-                  <p className="font-semibold ">10 NFTs</p>
+                  <p className="font-semibold ">25 NFTs</p>
                 </td>
               </tr>
               <tr className="border-t border-opacity-50">
