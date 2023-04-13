@@ -20,7 +20,7 @@ import Logo from "../Resource/logo.png";
 //   setShowWrongChainModal,
 //   chainConnect
 // } from '../Resource/user'
-// import WalletConnectButton from '../Resource/Wallet/WalletConnectButton'
+import WalletConnectButton from '../Resource/Wallet/WalletConnectButton'
 
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
 const injected = injectedModule()
@@ -101,7 +101,7 @@ const Header = () => {
           >
             Connect Wallet
           </button>
-          {/* <WalletConnectButton /> */}
+          <WalletConnectButton />
         </div>
       </div>
 

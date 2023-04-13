@@ -18,15 +18,15 @@ const Minting = () => {
     }
   }
 
-  const mintMonster = async () => {
-    console.log("mint monster")
-    const mintPrice = await nftContract.mintCost(walletAddress)
-    const sendValue = (mintCount * mintPrice).toString()
-    const tx = await nftContract.mint(mintCount, {
-      value: ethers.utils.parseEther(sendValue)
-    })
-    await tx.wait()
-  }
+  // const mintMonster = async () => {
+  //   console.log("mint monster")
+  //   const mintPrice = await nftContract.mintCost(walletAddress)
+  //   const sendValue = (mintCount * mintPrice).toString()
+  //   const tx = await nftContract.mint(mintCount, {
+  //     value: ethers.utils.parseEther(sendValue)
+  //   })
+  //   await tx.wait()
+  // }
 
   return (
     <div className='pt-32'>
@@ -51,7 +51,10 @@ const Minting = () => {
             <div className={mintCount !== 0 ? 'text-4xl font-bold text-primary' : 'text-3xl font-bold'}>{mintCount}</div>
             <button onClick={increaseMintCount} className='p-1 text-3xl font-bold text-black rounded-xl px-6 bg-gray-400 hover:bg-secondary transition-all ease-in-out active:text-2xl '>+</button>
           </div>
-            <button onClick={mintMonster} className="px-12 py-3 bg-primary hover:text-2xl transition-all ease-in-out font-bold uppercase rounded-lg text-xl">
+            <button
+              // onClick={mintMonster}
+              className="px-12 py-3 bg-primary hover:text-2xl transition-all ease-in-out font-bold uppercase rounded-lg text-xl"
+            >
               Mint Monster
             </button>
           </div>
