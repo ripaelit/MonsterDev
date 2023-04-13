@@ -7,6 +7,12 @@ const ethers = require('ethers');
 const Mintpage = () => {
   const [mintCount, setMintCount] = useState(0)
   const [mintPrice, setMintPrice] = useState('60')
+  const [publicPrice, setPublicPrice] = useState('0')
+  const [discountedPrice, setDiscountedPrice] = useState('0')
+
+  const provider = useSelector((state) => {
+    return state.user.provider
+  })
 
   const walletAddress = useSelector((state) => {
     return state.user.address
@@ -16,20 +22,42 @@ const Mintpage = () => {
     return state.user.monsterContract
   })
 
+  const weiToEth = (weiValueStr) => {
+    return ((new BigNumber(weiValueStr)).div((new BigNumber(10)).pow(18))).toString()
+  }
+
   useEffect(() => {
-    if (!nftContract) {
-      console.log("userEffect: nftContract is null")
-      return;
+    async function updatePrice() {
+      if (!nftContract) {
+        console.log("userEffect: nftContract is null")
+        return;
+      }
+
+      if (!walletAddress) {
+        console.log("userEffect: walletAddress is null")
+        return;
+      }
+
+      if (!provider) {
+        console.log("userEffect: provider is null")
+        return;
+      }
+
+      let newPublicPrice = weiToEth((await nftContract.cost()).toString())
+      setPublicPrice(weiToEth((await nftContract.cost()).toString()))
+
+      let newDiscountedPrice = weiToEth((await nftContract.wlCost()).toString())
+      setDiscountedPrice(weiToEth((await nftContract.wlCost()).toString()))
+
+      let balance = await nftContract.balanceOf(walletAddress.toString())
+      if ((new BigNumber(balance.toString())).gt(25)) {
+        setMintPrice(newPublicPrice)
+      } else {
+        setMintPrice(newDiscountedPrice)
+      }
     }
-    nftContract.balanceOf(walletAddress.toString())
-      .then((balance) => {
-        if ((new BigNumber(balance.toString())).gt(25)) {
-          setMintPrice('60')
-        } else {
-          setMintPrice('45')
-        }
-      })
-  }, [walletAddress, nftContract])
+    updatePrice()
+  }, [walletAddress, nftContract, provider])
 
   const increaseMintCount = () => {
     setMintCount((prev) => (prev < 25) ? (prev + 1) : prev)
@@ -102,7 +130,7 @@ const Mintpage = () => {
                   <p className="font-semibold ">Public Price</p>
                 </td>
                 <td>
-                  <p className="font-semibold ">60 CRO</p>
+                  <p className="font-semibold ">{publicPrice} CRO</p>
                 </td>
               </tr>
               <tr className="border-t border-opacity-50">
@@ -110,7 +138,7 @@ const Mintpage = () => {
                   <p className="font-semibold ">Whitelist Price</p>
                 </td>
                 <td>
-                  <p className="font-semibold ">45 CRO</p>
+                  <p className="font-semibold ">{discountedPrice} CRO</p>
                 </td>
               </tr>
               <tr className="border-t border-opacity-50">
