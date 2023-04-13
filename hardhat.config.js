@@ -1,6 +1,6 @@
-import "@nomiclabs/hardhat";
-import "@nomiclabs/hardhat-etherscan";
-import "@cronos-labs/hardhat-cronoscan";
+// require("@nomiclabs/hardhat");
+require("@nomiclabs/hardhat-etherscan");
+require("@cronos-labs/hardhat-cronoscan");
 require("dotenv").config();
 require("@nomiclabs/hardhat-waffle");
 
@@ -76,7 +76,7 @@ module.exports = {
         network: "cronosTest",
         chainId: 338,
         urls: {
-          apiURL: "https://api-goerli.etherscan.io/api",
+          apiURL: "https://cronos.org/explorer/api",
           browserURL: "https://cronos.crypto.org/explorer/testnet3/"
         }
       }

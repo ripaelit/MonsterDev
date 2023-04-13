@@ -29,7 +29,6 @@ contract CrazzzyMonsters is ERC721Enumerable, ERC2981, Ownable, ReentrancyGuard{
     address public royaltyWallet = 0x9D2349C58861287358905e133F28c5F0a5b687E3;
     uint256 constant SCALE = 1000;
     mapping(address => bool) public whitelisted;
-    uint256 public whitelistedCount;
 
     struct MintInfo {
         bool paused;
@@ -74,12 +73,7 @@ contract CrazzzyMonsters is ERC721Enumerable, ERC2981, Ownable, ReentrancyGuard{
         _setDefaultRoyalty(receiver, feeNumerator);
     }
 
-    function mint(uint256 amount) public payable {
-        require(!paused, "paused");
-        require(block.timestamp >= publicTimestamp, "Mint is not live yet");
-        require(amount > 0 && amount <= 25, "Invalid amount");
-        uint256 supply = totalSupply();
-        require(supply + amount <= maxSupply, "Max supply exceeded");
+    function quoteMintValue(uint256 amount) public view returns (uint256 mintValue) {
         uint256 amountNormal = amount;
         uint256 amountDiscount = 0;
 
@@ -95,7 +89,18 @@ contract CrazzzyMonsters is ERC721Enumerable, ERC2981, Ownable, ReentrancyGuard{
                 }
             }
         }
-        require(msg.value >= cost * amountNormal + wlCost * amountDiscount, "insufficient funds");
+
+        mintValue = cost * amountNormal + wlCost * amountDiscount;
+    }
+
+    function mint(uint256 amount) public payable {
+        require(!paused, "paused");
+        require(block.timestamp >= publicTimestamp, "Mint is not live yet");
+        require(amount > 0 && amount <= 25, "Invalid amount");
+        uint256 supply = totalSupply();
+        require(supply + amount <= maxSupply, "Max supply exceeded");
+        uint256 mintValue = quoteMintValue(amount);
+        require(msg.value >= mintValue, "insufficient funds");
 
         for (uint256 i = 0; i < amount; i++) {
             _safeMint(msg.sender, _getNewId(supply+i));
@@ -190,32 +195,13 @@ contract CrazzzyMonsters is ERC721Enumerable, ERC2981, Ownable, ReentrancyGuard{
         wlCost = _newCost;
     }
 
-    function setWhitelisted(address _address, bool _whitelisted)
-        public
-        onlyOwner
-    {
-        if (whitelisted[_address] == _whitelisted) {
-            return;
-        }
+    function setWhitelisted(address _address, bool _whitelisted) public onlyOwner {
         whitelisted[_address] = _whitelisted;
-        if (_whitelisted == true) {
-            ++whitelistedCount;
-        }
-        else {
-            --whitelistedCount;
-        }
     }
 
     function setWhitelistAddresses(address[] memory addresses) public onlyOwner {
-        require(whitelistedCount + addresses.length <= 25, "Whitelist size cannot exceed 25");
         for (uint i = 0; i < addresses.length; i++) {
-            if (whitelisted[addresses[i]] == true) {
-                continue;
-            }
-            else {
-                whitelisted[addresses[i]] = true;
-                ++whitelistedCount;
-            }
+            whitelisted[addresses[i]] = true;
         }
     }
 

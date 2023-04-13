@@ -1,14 +1,16 @@
-import Header from "./Components/Header";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import NftViewer from "./Components/NftViewer";
-import Home from "./Components/Home";
-import Royalties from "./Components/Royalties";
-import Minting from "./Components/Minting";
+import Header from "./Components/Header";
+import Homepage from "./Components/Homepage";
+import Mintpage from "./Components/Mintpage";
+import Royaltiespage from "./Components/Royaltiespage";
+import NftViewerpage from "./Components/NftViewerpage";
 import Footer from "./Components/Footer";
+import { Provider } from "react-redux"
+import store from "./Resource/store"
 
 function App() {
   return (
-    <>
+    <Provider store={store}>
       <Router>
         <Header />
         <Routes>
@@ -17,17 +19,17 @@ function App() {
             path="/"
             element={
               <>
-                <Home />
+                <Homepage />
               </>
             }
           ></Route>
-          <Route path="/nftviewer" element={<NftViewer />} />
-          <Route path="/royalties" element={<Royalties />} />
-          <Route path="/mint" element={<Minting />} />
+          <Route path="/mint" element={<Mintpage />} />
+          <Route path="/royalties" element={<Royaltiespage />} />
+          <Route path="/nftviewer" element={<NftViewerpage />} />
         </Routes>
         <Footer />
       </Router>
-    </>
+    </Provider>
   );
 }
 

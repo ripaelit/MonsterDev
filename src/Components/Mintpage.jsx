@@ -1,36 +1,60 @@
-import React, { useState } from 'react'
-import Nft from "../Resource/Nft.jpg";
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import Nft from "../Resource/images/Nft.jpg";
+import BigNumber from 'bignumber.js'
 const ethers = require('ethers');
 
-const Minting = () => {
+const Mintpage = () => {
   const [mintCount, setMintCount] = useState(0)
+  const [mintPrice, setMintPrice] = useState('60')
 
-  const walletAddress = ""
-  const nftContract = ""
+  const walletAddress = useSelector((state) => {
+    return state.user.address
+  })
+
+  const nftContract = useSelector((state) => {
+    return state.user.monsterContract
+  })
+
+  useEffect(() => {
+    if (!nftContract) {
+      console.log("userEffect: nftContract is null")
+      return;
+    }
+    nftContract.balanceOf(walletAddress.toString())
+      .then((balance) => {
+        if ((new BigNumber(balance.toString())).gt(25)) {
+          setMintPrice('60')
+        } else {
+          setMintPrice('45')
+        }
+      })
+  }, [walletAddress, nftContract])
 
   const increaseMintCount = () => {
-    setMintCount((prev) => prev + 1)
+    setMintCount((prev) => (prev < 25) ? (prev + 1) : prev)
   }
 
   const decreaseMintCount = () => {
-    if(mintCount !== 0){
-      setMintCount((prev) => prev - 1)
-    }
+    setMintCount((prev) => (prev > 0) ? (prev - 1) : prev)
   }
 
   const mintMonster = async () => {
-    console.log("mint monster")
-    const mintPrice = await nftContract.mintCost(walletAddress)
-    const sendValue = (mintCount * mintPrice).toString()
+    if (!nftContract) {
+      console.log("nftContract is null!!!")
+      return;
+    }
+    const mintValue = await nftContract.quoteMintValue(mintCount)
+    console.log("mintValue", mintValue, mintValue.toString(), "mintCount", mintCount)
     const tx = await nftContract.mint(mintCount, {
-      value: ethers.utils.parseEther(sendValue)
+      value: mintValue
     })
     await tx.wait()
   }
 
   return (
     <div className='pt-32'>
-        <div className="flex flex-col items-center justify-center gap-12">
+      <div className="flex flex-col items-center justify-center gap-12">
         {/* nft */}
         <div className="">
           <img src={Nft} alt="" className="w-72 md:w-96 shadow-xl rounded-xl " />
@@ -43,7 +67,7 @@ const Minting = () => {
           </div>
           <div className="text-3xl">
             <span className="font-bold text-secondary">Current Price: </span>
-            <span>60 CRO</span>
+            <span>{mintPrice} CRO</span>
           </div>
           <div>
           <div className='flex flex-row items-center justify-center gap-6 pt-4 pb-4'>
@@ -51,7 +75,10 @@ const Minting = () => {
             <div className={mintCount !== 0 ? 'text-4xl font-bold text-primary' : 'text-3xl font-bold'}>{mintCount}</div>
             <button onClick={increaseMintCount} className='p-1 text-3xl font-bold text-black rounded-xl px-6 bg-gray-400 hover:bg-secondary transition-all ease-in-out active:text-2xl '>+</button>
           </div>
-            <button onClick={mintMonster} className="px-12 py-3 bg-primary hover:text-2xl transition-all ease-in-out font-bold uppercase rounded-lg text-xl">
+            <button
+              onClick={mintMonster}
+              className="px-12 py-3 bg-primary hover:text-2xl transition-all ease-in-out font-bold uppercase rounded-lg text-xl"
+            >
               Mint Monster
             </button>
           </div>
@@ -99,7 +126,7 @@ const Minting = () => {
                   <p className="font-semibold ">Max mint per tx</p>
                 </td>
                 <td>
-                  <p className="font-semibold ">10 NFTs</p>
+                  <p className="font-semibold ">25 NFTs</p>
                 </td>
               </tr>
               <tr className="border-t border-opacity-50">
@@ -132,4 +159,4 @@ const Minting = () => {
   )
 }
 
-export default Minting
+export default Mintpage

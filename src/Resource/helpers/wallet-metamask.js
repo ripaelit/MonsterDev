@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { chainConfig } from "../constants";
+import { defaultChainConfig } from "../constants";
 
 const hexToInt = (s) => {
   const bn = ethers.BigNumber.from(s);
@@ -12,19 +12,19 @@ export const switchNetwork = async () => {
   try {
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
-      params: [{ chainId: chainConfig.chainId }],
+      params: [{ chainId: defaultChainConfig.chainId }],
     });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     await window.ethereum.request({
       method: "wallet_addEthereumChain",
       params: [
         {
-          chainId: chainConfig.chainId,
-          chainName: chainConfig.chainName,
-          rpcUrls: chainConfig.rpcUrls,
-          nativeCurrency: chainConfig.nativeCurrency,
-          blockExplorerUrls: chainConfig.blockExplorerUrls,
+          chainId: defaultChainConfig.chainId,
+          chainName: defaultChainConfig.chainName,
+          rpcUrls: defaultChainConfig.rpcUrls,
+          nativeCurrency: defaultChainConfig.nativeCurrency,
+          blockExplorerUrls: defaultChainConfig.blockExplorerUrls,
         },
       ],
     });
@@ -34,7 +34,7 @@ export const switchNetwork = async () => {
 export const connect = async () => {
   try {
     let chainId = await window.ethereum.request({ method: "eth_chainId" });
-    if (!(chainId === chainConfig.chainId)) {
+    if (!(chainId === defaultChainConfig.chainId)) {
       await switchNetwork();
       await delay(2000);
     }
@@ -51,7 +51,7 @@ export const connect = async () => {
       address: accounts[0],
       browserWeb3Provider: new ethers.providers.Web3Provider(window.ethereum),
       serverWeb3Provider: new ethers.providers.JsonRpcProvider(
-        chainConfig.rpcUrls[0]
+        defaultChainConfig.rpcUrls[0]
       ),
       connected: true,
       chainId: hexToInt(
@@ -59,7 +59,7 @@ export const connect = async () => {
       ),
     };
   } catch (e) {
-    console.log("error:", e);
+    // console.log("error:", e);
     return null;
   }
 };

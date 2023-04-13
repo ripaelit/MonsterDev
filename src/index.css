@@ -6,33 +6,34 @@
 
 
 body{
-    background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(./Resource/Space_background.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-font-family: 'Text Me One', sans-serif;
+  background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(./Resource/images/Space_background.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-family: 'Text Me One', sans-serif;
 }
 
-.homeText { 
+.homeText {
   font-family: 'Poppins', sans-serif;
-font-family: 'Text Me One', sans-serif;
+  font-family: 'Text Me One', sans-serif;
 }
 
 .navbar{
-    background-color: rgb(37, 38, 52);
+  background-color: rgb(37, 38, 52);
 }
 
 body::-webkit-scrollbar {
-    width: 0.5em;
-  }
-   
-  body::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  }
-   
-  body::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
-  }
+  /* width: 0.5em; */
+  width: 0;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}

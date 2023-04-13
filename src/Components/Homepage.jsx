@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import HomeBanner from "../Resource/HomeBanner.jpg"
+import HomeBanner from "../Resource/images/HomeBanner.jpg"
 
-const Home = () => {
+const Homepage = () => {
   return (
     <div className="container mx-auto">
       <div className="text-center w-full pt-24 pb-12 px-6 md:px-0 xl:pb-24">
@@ -46,4 +46,4 @@ const Home = () => {
 };
 
 
-export default Home;
+export default Homepage;
