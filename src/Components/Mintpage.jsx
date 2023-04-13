@@ -72,10 +72,21 @@ const Mintpage = () => {
       console.log("nftContract is null!!!")
       return;
     }
+    
     const mintValue = await nftContract.quoteMintValue(mintCount)
     console.log("mintValue", mintValue, mintValue.toString(), "mintCount", mintCount)
+
+    const gasEstimated = await nftContract.estimateGas.mint(
+      mintCount,
+      {
+        value: mintValue.toString()
+      }
+    )
+    const gas = Math.ceil(gasEstimated.toNumber() * 1.5)
+
     const tx = await nftContract.mint(mintCount, {
-      value: mintValue
+      value: mintValue.toString(),
+      gasLimit: gas
     })
     await tx.wait()
   }
