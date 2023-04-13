@@ -18,7 +18,6 @@ const WalletConnectButton = () => {
   const walletAddress = useSelector((state) => {
     return state.user.address
   })
-
   const correctChain = useSelector((state) => {
     return state.user.correctChain
   })
@@ -28,7 +27,6 @@ const WalletConnectButton = () => {
   const needsOnboard = useSelector((state) => {
     return state.user.needsOnboard
   })
-
   const connectWalletPressed = async () => {
     if (needsOnboard) {
       const onboarding = new MetaMaskOnboarding()
@@ -39,7 +37,7 @@ const WalletConnectButton = () => {
   }
 
   useEffect(() => {
-    console.log("WalletConnectButton: walletAddress", walletAddress);
+    console.log("WalletConnectButton --> walletAddress:::", walletAddress);
   }, [walletAddress])
 
   useEffect(() => {
@@ -130,7 +128,7 @@ const WalletConnectButton = () => {
       className="bg-primary px-4 py-2 cursor-pointer text-sm rounded-xl font-bold "
     >
       {!walletAddress ? "Connect Wallet" : walletAddress.substr(0,12)+"..."}
-    </button> 
+    </button>
     // <div>
     //   {!walletAddress && (
     //     <button

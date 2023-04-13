@@ -34,6 +34,7 @@ const userSlice = createSlice({
     showWrongChainModal: false,
     isMetamask: false
   },
+
   reducers: {
     accountChanged(state, action) {
       state.balance = action.payload.balance
@@ -43,34 +44,28 @@ const userSlice = createSlice({
       // if (action.payload.tokenContract)
       //   state.tokenContract = action.payload.tokenContract
     },
-
     setIsMetamask(state, action) {
       state.isMetamask = action.payload.isMetamask
     },
-
     onCorrectChain(state, action) {
       state.correctChain = action.payload.correctChain
     },
-
     onProvider(state, action) {
       state.provider = action.payload.provider
       state.needsOnboard = action.payload.needsOnboard
       state.correctChain = action.payload.correctChain
     },
-
     onBasicAccountData(state, action) {
-      console.log('onBasicAccountData: ', action.payload.address)
+      console.log('onBasicAccountData:::', action.payload.address)
       state.address = action.payload.address
       state.provider = action.payload.provider
       state.web3modal = action.payload.web3modal
       state.correctChain = action.payload.correctChain
       state.needsOnboard = action.payload.needsOnboard
     },
-
     connectingWallet(state, action) {
       state.connectingWallet = action.payload.connecting
     },
-
     setShowWrongChainModal(state, action) {
       state.showWrongChainModal = action.payload
     },
