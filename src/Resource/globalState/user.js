@@ -342,6 +342,7 @@ export const initProvider = () => async (dispatch) => {
 }
 
 export const chainConnect = (type) => async (dispatch) => {
+  chainInfo = defaultChainConfig
   if (window.ethereum) {
     const cid = ethers.utils.hexValue(BigNumber.from(chainInfo.chainId))
     try {
@@ -358,14 +359,14 @@ export const chainConnect = (type) => async (dispatch) => {
             method: 'wallet_addEthereumChain',
             params: [
               {
-                chainName: chainInfo.name,
                 chainId: cid,
+                chainName: chainInfo.chainName,
                 rpcUrls: [chainInfo.rpcUrls[0]],
-                blockExplorerUrls: null,
+                blockExplorerUrls: [chainInfo.blockExplorerUrls[0]],
                 nativeCurrency: {
-                  name: chainInfo.name,
+                  name: chainInfo.nativeCurrency.name,
                   symbol: chainInfo.nativeCurrency.symbol,
-                  decimals: 18
+                  decimals: chainInfo.nativeCurrency.decimals
                 }
               }
             ]
