@@ -76,7 +76,7 @@ module.exports = {
         network: "cronosTest",
         chainId: 338,
         urls: {
-          apiURL: "https://api-goerli.etherscan.io/api",
+          apiURL: "https://cronos.org/explorer/api",
           browserURL: "https://cronos.crypto.org/explorer/testnet3/"
         }
       }
