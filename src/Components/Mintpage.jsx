@@ -16,13 +16,11 @@ const Mintpage = () => {
   })
 
   const increaseMintCount = () => {
-    setMintCount((prev) => prev + 1)
+    setMintCount((prev) => (prev < 25) ? (prev + 1) : prev)
   }
 
   const decreaseMintCount = () => {
-    if(mintCount !== 0){
-      setMintCount((prev) => prev - 1)
-    }
+    setMintCount((prev) => (prev > 0) ? (prev - 1) : prev)
   }
 
   const mintMonster = async () => {
