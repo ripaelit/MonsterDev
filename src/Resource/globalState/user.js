@@ -59,6 +59,7 @@ const userSlice = createSlice({
     },
 
     onBasicAccountData(state, action) {
+      console.log('onBasicAccountData: ', action.payload.address)
       state.address = action.payload.address
       state.provider = action.payload.provider
       state.web3modal = action.payload.web3modal
@@ -74,6 +75,7 @@ const userSlice = createSlice({
       state.showWrongChainModal = action.payload
     },
     onLogout(state) {
+      console.log('onLogout:')
       state.connectingWallet = false
       const web3Modal = new Web3Modal({
         cacheProvider: false, // optional

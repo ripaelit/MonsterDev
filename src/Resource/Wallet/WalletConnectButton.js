@@ -45,6 +45,10 @@ const WalletConnectButton = () => {
   }
 
   useEffect(() => {
+    console.log("WalletConnectButton: walletAddress", walletAddress);
+  }, [walletAddress])
+
+  useEffect(() => {
     console.log("walletAddress:::", walletAddress)
     let defiLink = localStorage.getItem('DeFiLink_session_storage_extension')
     if (defiLink) {
