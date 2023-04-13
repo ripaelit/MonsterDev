@@ -13,12 +13,12 @@ import abi from '../abi.json'
 import {
   ContractAddress,
   chainConfig,
-  TokenContractAddress
 } from '../constants'
 
 let chainInfo
 const userSlice = createSlice({
   name: 'user',
+
   initialState: {
     // Wallet
     provider: null,
@@ -27,9 +27,8 @@ const userSlice = createSlice({
     connectingWallet: false,
     gettingContractData: true,
     needsOnboard: false,
-    // Contracts
+    // Contract
     monsterContract: null,
-    // tokenContract: null,
     correctChain: false,
     showWrongChainModal: false,
     isMetamask: false
@@ -284,7 +283,6 @@ export const connectAccount =
           correctChain: correctChain,
           balance: balance,
           monsterContract
-          // tokenContract
         })
       )
     } catch (error) {

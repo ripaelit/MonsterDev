@@ -27,7 +27,7 @@ const Minting = () => {
 
   const mintMonster = async () => {
     if (!nftContract) {
-      console.log("nftContract is null!")
+      console.log("nftContract is null!!!")
       return;
     }
     const mintValue = await nftContract.quoteMintValue(mintCount)
