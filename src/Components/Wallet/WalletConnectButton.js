@@ -1,19 +1,12 @@
 import { memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { providers, Contract } from 'ethers'
 import MetaMaskOnboarding from '@metamask/onboarding'
-import { ContractAddress, chainConfig } from '../../Resource/constants'
-import abi from '../../Resource/abi.json'
 import useMedia from '../../hooks/useMedia'
 import { connectAccount, onLogout, setShowWrongChainModal, chainConnect } from '../../Resource/globalState/user'
-
-let lotteryContract, provider
 
 const WalletConnectButton = () => {
   const dispatch = useDispatch()
   const isMobile = useMedia('(max-width: 1200px)')
-  const [bought, setBought] = useState(-1)
-  const [hrgls, setHrgls] = useState(false);
 
   const walletAddress = useSelector((state) => {
     return state.user.address
@@ -71,40 +64,19 @@ const WalletConnectButton = () => {
         dispatch(connectAccount(false, 'defi'))
       }
     }
-
     // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setHrgls(oldVal => !oldVal);
-    }, 10000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (!walletAddress) {
-      return
+    if (walletAddress && !correctChain) {
+      onWrongChainModalChangeChain()
     }
-    const init = async () => {
-      try {
-        provider = new providers.JsonRpcProvider(chainConfig.rpcUrls[0])
-        lotteryContract = new Contract(
-          ContractAddress,
-          abi,
-          provider
-        );
-        lotteryContract.getUserTickets(walletAddress).then(userTickets => setBought(userTickets.toNumber()))
-      } catch (err) {
-        // console.log('Error getting endtime:', err)
-      }
-    }
-    init()
-  }, [walletAddress, hrgls])
+  }, [walletAddress, correctChain])
 
   const onWrongChainModalChangeChain = () => {
     dispatch(setShowWrongChainModal(false))
     dispatch(chainConnect())
+    console.log("onWrongChainModalChangeChain:::")
   }
 
   const logout = async () => {
@@ -112,23 +84,41 @@ const WalletConnectButton = () => {
   }
 
   return (
-    <button
-      onClick={() => {
-        if (!walletAddress) {
-          connectWalletPressed()
-        }
-        else {
-          // if (!correctChain && !user.showWrongChainModal) {
-          //   onWrongChainModalChangeChain()
-          // }
-          logout()
-        }
-        // if (!context.account) handleWallet();
-      }}
-      className="bg-primary px-4 py-2 cursor-pointer text-sm rounded-xl font-bold "
-    >
-      {!walletAddress ? "Connect Wallet" : walletAddress.substr(0,12)+"..."}
-    </button>
+    <div>
+      {
+        !walletAddress &&
+        <button
+          onClick={() => {
+            connectWalletPressed()
+          }}
+          className="bg-primary px-4 py-2 cursor-pointer text-sm rounded-xl font-bold "
+        >
+          Connect Wallet
+        </button>
+      }
+      {
+        walletAddress && !correctChain && 
+        <button
+          onClick={() => {
+            onWrongChainModalChangeChain()
+          }}
+          className="bg-primary px-4 py-2 cursor-pointer text-sm rounded-xl font-bold "
+        >
+          Switch Network
+        </button>
+      }
+      {
+        walletAddress && correctChain &&
+        <button
+          onClick={() => {
+            logout()
+          }}
+          className="bg-primary px-4 py-2 cursor-pointer text-sm rounded-xl font-bold "
+        >
+          {walletAddress.substr(0,12)+"..."}
+        </button>
+      }
+    </div>
     // <div>
     //   {!walletAddress && (
     //     <button
@@ -168,4 +158,5 @@ const WalletConnectButton = () => {
     // </div>
   )
 }
+
 export default memo(WalletConnectButton)

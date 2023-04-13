@@ -10,10 +10,7 @@ import { captureException } from '@sentry/react'
 // import abi from '../artifacts/contracts/CrosmoBaby.sol/AlienCrosmobaby.json'
 import abi from '../abi.json'
 // import tokenAbi from '../constants/tokenAbi.json'
-import {
-  ContractAddress,
-  chainConfig,
-} from '../constants'
+import { ContractAddress, defaultChainConfig } from '../constants'
 
 let chainInfo
 const userSlice = createSlice({
@@ -55,7 +52,8 @@ const userSlice = createSlice({
       state.correctChain = action.payload.correctChain
     },
     onBasicAccountData(state, action) {
-      console.log('onBasicAccountData:::', action.payload.address)
+      // console.log('onBasicAccountData:::', action.payload.address)
+      // console.log('onBasicAccountData --> correctChain:::', action.payload.correctChain)
       state.address = action.payload.address
       state.provider = action.payload.provider
       state.web3modal = action.payload.web3modal
@@ -69,7 +67,7 @@ const userSlice = createSlice({
       state.showWrongChainModal = action.payload
     },
     onLogout(state) {
-      console.log('onLogout:')
+      // console.log('onLogout:::')
       state.connectingWallet = false
       const web3Modal = new Web3Modal({
         cacheProvider: false, // optional
@@ -106,11 +104,8 @@ export const user = userSlice.reducer
 export const connectAccount =
   (firstRun = false, type = '') =>
   async (dispatch) => {
-    console.log('currentlyPath:::', window.location.pathname)
-    // const currentlyPath = window.location.pathname;
-
-    chainInfo = chainConfig
-    console.log('chainInfo:::', chainInfo)
+    // console.log('currentPath:::', window.location.pathname)
+    chainInfo = defaultChainConfig
     const providerOptions = {
       injected: {
         display: {
@@ -150,11 +145,9 @@ export const connectAccount =
       providerOptions.walletconnect = {
         package: WalletConnectProvider, // required
         options: {
-          chainId: 5,
-          // chainId: 25,
+          chainId: 338,
           rpc: {
-            5: 'https://goerli.infura.io/v3/33f72aa1b4f441bc8f3a244da53533b4',
-            25: 'https://cronosrpc-1.xstaking.sg'
+            338: 'https://evm-t3.cronos.org'
           },
           network: 'cronos',
           metadata: {
@@ -162,7 +155,7 @@ export const connectAccount =
           }
         }
       }
-      console.log('provider:', providerOptions.walletconnect)
+      // console.log('provider:::', providerOptions.walletconnect)
     }
 
     const web3ModalWillShowUp = !localStorage.getItem(
@@ -187,7 +180,7 @@ export const connectAccount =
         return null
       })
 
-    console.log('web3provider:::', web3provider)
+    // console.log('web3provider:::', web3provider)
 
     if (!web3provider) {
       dispatch(onLogout())
@@ -203,15 +196,16 @@ export const connectAccount =
       const cid = await web3provider.request({
         method: 'net_version'
       })
-      // console.log('cid: ', { cid, chainId: chainInfo.chainId })
+      console.log('cid:::', { cid, chainId: chainInfo.chainId })
       const correctChain =
         Number(cid) === chainInfo.chainId ||
         Number(cid) === Number(chainInfo.chainId)
+        // true
       const accounts = await web3provider.request({
         method: 'eth_accounts',
         params: [{ chainId: cid }]
       })
-      console.log("account:::", accounts[0])
+      // console.log("account:::", accounts[0])
       const address = accounts[0]
       const signer = provider.getSigner()
 
@@ -227,8 +221,8 @@ export const connectAccount =
           address: address,
           provider: provider,
           web3modal: web3Modal,
+          correctChain: correctChain,
           needsOnboard: false,
-          correctChain: correctChain
         })
       )
       if (firstRun) {
@@ -261,6 +255,9 @@ export const connectAccount =
 
       let balance
       let monsterContract
+
+      // console.log("signer:::", signer)
+      // console.log("connectAccount --> correctChain:::", correctChain)
 
       if (signer && correctChain) {
         monsterContract = new Contract(ContractAddress, abi, signer)
@@ -327,11 +324,11 @@ export const initProvider = () => async (dispatch) => {
     // const obj = {
     //   provider: provider,
     //   needsOnboard: false,
-    //   membershipContract: mc,
+      // membershipContract: mc,
     //   correctChain: correctChain,
     // };
 
-    //dispatch(onProvider(obj))
+    // dispatch(onProvider(obj))
 
     provider.on('accountsChanged', (accounts) => {
       // console.log("dispatching accountsChanged with undefined contractAddress")
@@ -394,15 +391,13 @@ export const chainConnect = (type) => async (dispatch) => {
     }
   } else {
     // eslint-disable-next-line
-    const web3Provider = new WalletConnectProvider({
-      infuraId: '33f72aa1b4f441bc8f3a244da53533b4',
-      rpc: {
-        5: 'https://goerli.infura.io/v3/33f72aa1b4f441bc8f3a244da53533b4',
-        25: 'https://cronosrpc-1.xstaking.sg'
-      },
-      chainId: 5
-      // chainId: 25,
-    })
+    // const web3Provider = new WalletConnectProvider({
+    //   // infuraId: '33f72aa1b4f441bc8f3a244da53533b4',
+    //   rpc: {
+    //     338: 'https://evm-t3.cronos.org'
+    //   },
+    //   chainId: 338,
+    // })
   }
 }
 

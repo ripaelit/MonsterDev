@@ -1,21 +1,21 @@
 import { ethers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { chainConfig } from "../constants";
+import { defaultChainConfig } from "../constants";
 
 export const connect = async () => {
   try {
     localStorage.clear();
     const provider = new WalletConnectProvider({
       rpc: {
-        [chainConfig.chainId]: chainConfig.rpcUrls[0],
+        [defaultChainConfig.chainId]: defaultChainConfig.rpcUrls[0],
       },
-      chainId: chainConfig.chainId,
+      chainId: defaultChainConfig.chainId,
     });
     await provider.enable();
     const ethersProvider = new ethers.providers.Web3Provider(provider);
-    if (Number(provider.chainId) !== Number(chainConfig.chainId)) {
+    if (Number(provider.chainId) !== Number(defaultChainConfig.chainId)) {
       window.alert(
-        "Switch your Wallet to blockchain network " + chainConfig.chainName
+        "Switch your Wallet to blockchain network " + defaultChainConfig.chainName
       );
       return null;
     }
@@ -27,7 +27,7 @@ export const connect = async () => {
       address: (await ethersProvider.listAccounts())[0],
       browserWeb3Provider: ethersProvider,
       serverWeb3Provider: new ethers.providers.JsonRpcProvider(
-        chainConfig.rpcUrls[0]
+        defaultChainConfig.rpcUrls[0]
       ),
       wcProvider: provider,
       connected: true,
