@@ -191,7 +191,7 @@ export const connectAccount =
         return null
       })
 
-    console.log('web3provider:', web3provider)
+    console.log('web3provider:::', web3provider)
 
     if (!web3provider) {
       dispatch(onLogout())
@@ -215,6 +215,7 @@ export const connectAccount =
         method: 'eth_accounts',
         params: [{ chainId: cid }]
       })
+      console.log("account:::", accounts[0])
       const address = accounts[0]
       const signer = provider.getSigner()
 
