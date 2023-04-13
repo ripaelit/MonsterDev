@@ -6,9 +6,9 @@ const ethers = require('ethers');
 
 const Mintpage = () => {
   const [mintCount, setMintCount] = useState(0)
-  const [mintPrice, setMintPrice] = useState('60')
+  const [mintPrice, setMintPrice] = useState('0')
   const [publicPrice, setPublicPrice] = useState('0')
-  const [discountedPrice, setDiscountedPrice] = useState('0')
+  const [whitelistPrice, setWhitelistPrice] = useState('0')
 
   const provider = useSelector((state) => {
     return state.user.provider
@@ -46,14 +46,14 @@ const Mintpage = () => {
       let newPublicPrice = weiToEth((await nftContract.cost()).toString())
       setPublicPrice(weiToEth((await nftContract.cost()).toString()))
 
-      let newDiscountedPrice = weiToEth((await nftContract.wlCost()).toString())
-      setDiscountedPrice(weiToEth((await nftContract.wlCost()).toString()))
+      let newWhitelistPrice = weiToEth((await nftContract.wlCost()).toString())
+      setWhitelistPrice(weiToEth((await nftContract.wlCost()).toString()))
 
       let balance = await nftContract.balanceOf(walletAddress.toString())
       if ((new BigNumber(balance.toString())).gt(25)) {
         setMintPrice(newPublicPrice)
       } else {
-        setMintPrice(newDiscountedPrice)
+        setMintPrice(newWhitelistPrice)
       }
     }
     updatePrice()
@@ -138,7 +138,7 @@ const Mintpage = () => {
                   <p className="font-semibold ">Whitelist Price</p>
                 </td>
                 <td>
-                  <p className="font-semibold ">{discountedPrice} CRO</p>
+                  <p className="font-semibold ">{whitelistPrice} CRO</p>
                 </td>
               </tr>
               <tr className="border-t border-opacity-50">
