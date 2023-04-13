@@ -93,14 +93,14 @@ const Header = () => {
               </a>
             </li>
           </ul>
-          <button
+          {/* <button
             onClick={() => {
               // if (!context.account) handleWallet();
             }}
             className="bg-primary px-4 py-2 cursor-pointer text-sm rounded-xl font-bold "
           >
             Connect Wallet
-          </button>
+          </button> */}
           <WalletConnectButton />
         </div>
       </div>
