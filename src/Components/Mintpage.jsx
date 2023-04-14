@@ -50,6 +50,7 @@ const Mintpage = () => {
       let balance = await nftContract.balanceOf(walletAddress.toString())
       if ((new BigNumber(balance.toString())).lt(25)) {
         setMintPrice(newWhitelistPrice)
+        return
       }
     }
     setMintPrice(newPublicPrice)
@@ -78,7 +79,7 @@ const Mintpage = () => {
         value: mintValue.toString()
       }
     )
-    const gas = Math.ceil(gasEstimated.toNumber() * 1.5)
+    const gas = Math.ceil(gasEstimated.toNumber() * 3)
     const tx = await nftContract.mint(mintCount, {
       value: mintValue.toString(),
       gasLimit: gas
