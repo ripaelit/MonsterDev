@@ -13,12 +13,6 @@ import {
 import { AiOutlineClose } from "react-icons/ai";
 import { navLinks } from "../Resource/data";
 import Logo from "../Resource/images/logo.png";
-// import {
-//   connectAccount,
-//   onLogout,
-//   setShowWrongChainModal,
-//   chainConnect
-// } from '../Resource/user'
 import WalletConnectButton from './Wallet/WalletConnectButton'
 
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'

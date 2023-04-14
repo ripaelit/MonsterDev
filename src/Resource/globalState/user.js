@@ -192,15 +192,13 @@ export const connectAccount =
     try {
       dispatch(connectingWallet({ connecting: true }))
       const provider = new ethers.providers.Web3Provider(web3provider)
-
       const cid = await web3provider.request({
         method: 'net_version'
       })
-      console.log('cid:::', { cid, chainId: chainInfo.chainId })
+      // console.log('cid:::', { cid, chainId: chainInfo.chainId })
       const correctChain =
         Number(cid) === chainInfo.chainId ||
         Number(cid) === Number(chainInfo.chainId)
-        // true
       const accounts = await web3provider.request({
         method: 'eth_accounts',
         params: [{ chainId: cid }]
@@ -208,7 +206,6 @@ export const connectAccount =
       // console.log("account:::", accounts[0])
       const address = accounts[0]
       const signer = provider.getSigner()
-
       if (!correctChain) {
         if (firstRun) {
           dispatch(appAuthInitFinished())
@@ -231,25 +228,20 @@ export const connectAccount =
       web3provider.on('DeFiConnectorDeactivate', (error) => {
         dispatch(onLogout())
       })
-
       web3provider.on('disconnect', (error) => {
         dispatch(onLogout())
       })
-
       web3provider.on('accountsChanged', (accounts) => {
         dispatch(onLogout())
         dispatch(connectAccount())
       })
-
       web3provider.on('DeFiConnectorUpdate', (accounts) => {
         window.location.reload()
       })
-
       web3provider.on('chainChanged', (chainId) => {
         // Handle the new chain.
         // Correctly handling chain changes can be complicated.
         // We recommend reloading the page unless you have good reason not to.
-
         window.location.reload()
       })
 
