@@ -4,7 +4,7 @@ import MetaMaskOnboarding from '@metamask/onboarding'
 import useMedia from '../../hooks/useMedia'
 import { connectAccount, onLogout, setShowWrongChainModal, chainConnect } from '../../Resource/globalState/user'
 
-const WalletConnectButton = () => {
+const ConnectWalletButton = () => {
   const dispatch = useDispatch()
   const isMobile = useMedia('(max-width: 1200px)')
 
@@ -44,7 +44,7 @@ const WalletConnectButton = () => {
   }
 
   useEffect(() => {
-    // console.log("WalletConnectButton --> walletAddress:::", walletAddress);
+    // console.log("ConnectWalletButton --> walletAddress:::", walletAddress);
   }, [walletAddress])
 
   useEffect(() => {
@@ -128,4 +128,4 @@ const WalletConnectButton = () => {
   )
 }
 
-export default memo(WalletConnectButton)
+export default memo(ConnectWalletButton)
