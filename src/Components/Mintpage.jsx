@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import Nft from "../Resource/images/Nft.jpg";
+import { ethers } from "ethers";
 import BigNumber from 'bignumber.js'
 
 const Mintpage = () => {
@@ -18,28 +19,26 @@ const Mintpage = () => {
   const nftContract = useSelector((state) => {
     return state.user.monsterContract
   })
-  const weiToEth = (weiValueStr) => {
-    return ((new BigNumber(weiValueStr)).div((new BigNumber(10)).pow(18))).toString()
-  }
 
-  async function updatePrice() {
+  const updatePrice = async () => {
     if (!nftContract || !walletAddress || !provider) {
       return
     }
+    
     let _supply = (await nftContract.totalSupply()).toString()
     setSupply(_supply)
 
-    let newPublicPrice = weiToEth((await nftContract.cost()).toString())
-    setPublicPrice(weiToEth((await nftContract.cost()).toString()))
+    let newPublicPrice = Number(ethers.utils.formatEther(await nftContract.cost()))
+    setPublicPrice(newPublicPrice)
 
-    let newWhitelistPrice = weiToEth((await nftContract.wlCost()).toString())
-    setWhitelistPrice(weiToEth((await nftContract.wlCost()).toString()))
+    let newWhitelistPrice = Number(ethers.utils.formatEther(await nftContract.wlCost()))
+    setWhitelistPrice(newWhitelistPrice)
 
     let isWhitelisted = await nftContract.whitelisted(walletAddress.toString())
 
     if (isWhitelisted) {
-      let balance = await nftContract.balanceOf(walletAddress.toString())
-      if ((new BigNumber(balance.toString())).lt(25)) {
+      let balance = (await nftContract.balanceOf(walletAddress.toString())).toString()
+      if (Number(balance) > 25) {
         setMintPrice(newWhitelistPrice)
         return
       }
@@ -59,27 +58,28 @@ const Mintpage = () => {
   }
   const mintMonster = async () => {
     if (!nftContract || !walletAddress || !provider) {
-      // console.log("nftContract is null!!!")
       return
-    } else {
-      const mintValue = await nftContract.quoteMintValue(mintCount)
-      // console.log("mintValue:::", mintValue, mintValue.toString(), "mintCount:::", mintCount)
-      const gasEstimated = await nftContract.estimateGas.mint(
-        mintCount,
-        {
-          value: mintValue.toString()
-        }
-      )
-      const gas = Math.ceil(gasEstimated.toNumber() * 3)
-      const tx = await nftContract.mint(mintCount, {
-        value: mintValue.toString(),
-        gasLimit: gas
-      })
-      await tx.wait()
-
-      let _supply = (await nftContract.totalSupply()).toString()
-      setSupply(_supply)
     }
+    const balance = (await nftContract.balanceOf(walletAddress.toString())).toString()
+    const mintValue = (await nftContract.quoteMintValue(mintCount)).toString()
+    if ((new BigNumber(balance)).lt(new BigNumber(mintValue))) {
+      console.log("Not enough balance")
+    }
+    const gasEstimated = await nftContract.estimateGas.mint(
+      mintCount,
+      {
+        value: mintValue
+      }
+    )
+    const gas = Math.ceil(gasEstimated.toNumber() * 3)
+    const tx = await nftContract.mint(mintCount, {
+      value: mintValue,
+      gasLimit: gas
+    })
+    await tx.wait()
+
+    const _supply = (await nftContract.totalSupply()).toString()
+    setSupply(_supply)
   }
 
   return (
