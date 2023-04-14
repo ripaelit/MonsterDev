@@ -78,10 +78,11 @@ export const switchNetwork = async () => {
 
 export const getTokens = async () => {
   await connectContract();
-  console.log("window.ethereum.selectedAddress:::", window.ethereum.selectedAddress);
-  const txHash = await window.contract.methods.walletOfOwner(window.ethereum.selectedAddress).call();
-  console.log("tokens:::", txHash)
-  return txHash;
+  const currentWalletAddress = window.ethereum.selectedAddress
+  console.log("currentWalletAddress:::", window.ethereum.selectedAddress);
+  const tokenIds = await window.contract.methods.walletOfOwner(currentWalletAddress).call();
+  console.log("tokens:::", tokenIds)
+  return tokenIds;
 }
 
 // mint x number of nfts
