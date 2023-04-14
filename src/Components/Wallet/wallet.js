@@ -62,7 +62,7 @@ export const isConnected = async () => {
 export const switchNetwork = async () => {
   const { ethereum } = window;
   if (ethereum) {
-    // cronos id id 338 ( testnet )
+    // cronos chainId: 338 ( testnet )
     const chainId = await ethereum.request({ method: "eth_chainId" });
     if (chainId !== "0x4") {
       await ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x4" }] });

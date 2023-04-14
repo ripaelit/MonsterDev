@@ -35,7 +35,7 @@ const Mintpage = () => {
     //   console.log("useEffect: provider is null")
     //   return;
     // }
-    if (!nftContract) {
+    if (!nftContract || !walletAddress || !provider) {
       return
     } else {
       let _supply = (await nftContract.totalSupply()).toString()
@@ -70,7 +70,7 @@ const Mintpage = () => {
     setMintCount((prev) => (prev > 0) ? (prev - 1) : prev)
   }
   const mintMonster = async () => {
-    if (!nftContract) {
+    if (!nftContract || !walletAddress || !provider) {
       // console.log("nftContract is null!!!")
       return
     } else {
