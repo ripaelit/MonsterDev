@@ -369,8 +369,8 @@ export const chainConnect = (type) => async (dispatch) => {
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: cid }]
           })
-        } catch (addError) {
-          console.error(addError)
+        } catch (err) {
+          console.error(err)
           window.location.reload()
         }
       }
