@@ -67,7 +67,7 @@ const Header = () => {
             {navLinks.map((link) => (
               <li className="hover:text-secondary transition ease-in-out" key={link.name}>
                 <Link
-                  className={link.path == pathname && "text-secondary"}
+                  className={link.path == pathname ? "text-secondary" : ""}
                   to={link.path}
                 >
                   {link.name}
@@ -113,7 +113,7 @@ const Header = () => {
                 key={link.name}
               >
                 <Link
-                  className={pathname == link.path && "text-primary"}
+                  className={pathname == link.path ? "text-primary" : ""}
                   to={link.path}
                 >
                   {link.name}
