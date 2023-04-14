@@ -5,11 +5,11 @@ import { ethers } from "ethers";
 import BigNumber from 'bignumber.js'
 
 const Mintpage = () => {
-  const [mintCount, setMintCount] = useState(0)
-  const [mintPrice, setMintPrice] = useState('0')
+  const [mintCount, setMintCount] = useState(1)
   const [supply, setSupply] = useState('0')
-  const [publicPrice, setPublicPrice] = useState('0')
-  const [whitelistPrice, setWhitelistPrice] = useState('0')
+  const [mintPrice, setMintPrice] = useState(0)
+  const [publicPrice, setPublicPrice] = useState(0)
+  const [whitelistPrice, setWhitelistPrice] = useState(0)
   const provider = useSelector((state) => {
     return state.user.provider
   })
@@ -25,19 +25,19 @@ const Mintpage = () => {
       return
     }
     
-    let _supply = (await nftContract.totalSupply()).toString()
+    const _supply = (await nftContract.totalSupply()).toString()
     setSupply(_supply)
 
-    let newPublicPrice = Number(ethers.utils.formatEther(await nftContract.cost()))
+    const newPublicPrice = Number(ethers.utils.formatEther(await nftContract.cost()))
     setPublicPrice(newPublicPrice)
 
-    let newWhitelistPrice = Number(ethers.utils.formatEther(await nftContract.wlCost()))
+    const newWhitelistPrice = Number(ethers.utils.formatEther(await nftContract.wlCost()))
     setWhitelistPrice(newWhitelistPrice)
 
-    let isWhitelisted = await nftContract.whitelisted(walletAddress.toString())
+    const isWhitelisted = await nftContract.whitelisted(walletAddress.toString())
 
     if (isWhitelisted) {
-      let balance = (await nftContract.balanceOf(walletAddress.toString())).toString()
+      const balance = (await nftContract.balanceOf(walletAddress.toString())).toString()
       if (Number(balance) < 25) {
         setMintPrice(newWhitelistPrice)
         return
@@ -54,7 +54,7 @@ const Mintpage = () => {
     setMintCount((prev) => (prev < 25) ? (prev + 1) : prev)
   }
   const decreaseMintCount = () => {
-    setMintCount((prev) => (prev > 0) ? (prev - 1) : prev)
+    setMintCount((prev) => (prev > 1) ? (prev - 1) : prev)
   }
   const mintMonster = async () => {
     if (!nftContract || !walletAddress || !provider) {
@@ -71,7 +71,7 @@ const Mintpage = () => {
         value: mintValue
       }
     )
-    const gas = Math.ceil(gasEstimated.toNumber() * 3)
+    const gas = Math.ceil(gasEstimated.toNumber() * 2)
     const tx = await nftContract.mint(mintCount, {
       value: mintValue,
       gasLimit: gas
@@ -98,7 +98,7 @@ const Mintpage = () => {
           </div>
           </div>
           <div className="text-3xl">
-            <span className="font-bold text-secondary">Current Price: </span>
+            <span className="font-bold text-secondary">Current Price : </span>
             <span>{mintPrice} CRO</span>
           </div>
           <div>
