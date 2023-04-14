@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Nft from "../Resource/images/Nft.jpg";
 import BigNumber from 'bignumber.js'
-const ethers = require('ethers');
 
 const Mintpage = () => {
   const [mintCount, setMintCount] = useState(0)
@@ -10,76 +9,66 @@ const Mintpage = () => {
   const [supply, setSupply] = useState('0')
   const [publicPrice, setPublicPrice] = useState('0')
   const [whitelistPrice, setWhitelistPrice] = useState('0')
-
   const provider = useSelector((state) => {
     return state.user.provider
   })
-
   const walletAddress = useSelector((state) => {
     return state.user.address
   })
-
   const nftContract = useSelector((state) => {
     return state.user.monsterContract
   })
-
   const weiToEth = (weiValueStr) => {
     return ((new BigNumber(weiValueStr)).div((new BigNumber(10)).pow(18))).toString()
   }
 
-  useEffect(() => {
-    async function updatePrice() {
-      if (!nftContract) {
-        console.log("useEffect: nftContract is null")
-        return;
-      }
-
-      if (!walletAddress) {
-        console.log("useEffect: walletAddress is null")
-        return;
-      }
-
-      if (!provider) {
-        console.log("useEffect: provider is null")
-        return;
-      }
-
-      let _supply = (await nftContract.totalSupply()).toString()
-      setSupply(_supply)
-
-      let newPublicPrice = weiToEth((await nftContract.cost()).toString())
-      setPublicPrice(weiToEth((await nftContract.cost()).toString()))
-
-      let newWhitelistPrice = weiToEth((await nftContract.wlCost()).toString())
-      setWhitelistPrice(weiToEth((await nftContract.wlCost()).toString()))
-
-      let balance = await nftContract.balanceOf(walletAddress.toString())
-      if ((new BigNumber(balance.toString())).gt(25)) {
-        setMintPrice(newPublicPrice)
-      } else {
-        setMintPrice(newWhitelistPrice)
-      }
+  async function updatePrice() {
+    if (!nftContract) {
+      // console.log("useEffect: nftContract is null")
+      return;
     }
+    if (!walletAddress) {
+      // console.log("useEffect: walletAddress is null")
+      return;
+    }
+    if (!provider) {
+      // console.log("useEffect: provider is null")
+      return;
+    }
+    let _supply = (await nftContract.totalSupply()).toString()
+    setSupply(_supply)
+
+    let newPublicPrice = weiToEth((await nftContract.cost()).toString())
+    setPublicPrice(weiToEth((await nftContract.cost()).toString()))
+
+    let newWhitelistPrice = weiToEth((await nftContract.wlCost()).toString())
+    setWhitelistPrice(weiToEth((await nftContract.wlCost()).toString()))
+
+    let balance = await nftContract.balanceOf(walletAddress.toString())
+    if ((new BigNumber(balance.toString())).gt(25)) {
+      setMintPrice(newPublicPrice)
+    } else {
+      setMintPrice(newWhitelistPrice)
+    }
+  }
+
+  useEffect(() => {
     updatePrice()
   }, [walletAddress, nftContract, provider])
 
   const increaseMintCount = () => {
     setMintCount((prev) => (prev < 25) ? (prev + 1) : prev)
   }
-
   const decreaseMintCount = () => {
     setMintCount((prev) => (prev > 0) ? (prev - 1) : prev)
   }
-
   const mintMonster = async () => {
     if (!nftContract) {
-      console.log("nftContract is null!!!")
+      // console.log("nftContract is null!!!")
       return;
     }
-    
     const mintValue = await nftContract.quoteMintValue(mintCount)
-    console.log("mintValue", mintValue, mintValue.toString(), "mintCount", mintCount)
-
+    // console.log("mintValue:::", mintValue, mintValue.toString(), "mintCount:::", mintCount)
     const gasEstimated = await nftContract.estimateGas.mint(
       mintCount,
       {
@@ -87,7 +76,6 @@ const Mintpage = () => {
       }
     )
     const gas = Math.ceil(gasEstimated.toNumber() * 1.5)
-
     const tx = await nftContract.mint(mintCount, {
       value: mintValue.toString(),
       gasLimit: gas
