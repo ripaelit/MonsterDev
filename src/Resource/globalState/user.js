@@ -2,15 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 import { Contract, ethers, BigNumber } from 'ethers'
 import Web3Modal from 'web3modal'
 import detectEthereumProvider from '@metamask/detect-provider'
-// import { DeFiWeb3Connector } from 'deficonnect';
 import WalletConnectProvider from '@walletconnect/web3-provider'
-// import * as DefiWalletConnectProvider from '@deficonnect/web3-provider';
 import { appAuthInitFinished } from './initSlice'
 import { captureException } from '@sentry/react'
-// import abi from '../artifacts/contracts/CrosmoBaby.sol/AlienCrosmobaby.json'
 import abi from '../abi.json'
-// import tokenAbi from '../constants/tokenAbi.json'
-import { ContractAddress, defaultChainConfig } from '../constants'
+import { ContractAddress, defaultChainConfig } from '../../Resource/constants'
 
 let chainInfo
 const userSlice = createSlice({

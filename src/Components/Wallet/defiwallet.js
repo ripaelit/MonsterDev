@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { DeFiWeb3Connector } from "deficonnect";
-import { defaultChainConfig } from "../constants";
+import { defaultChainConfig } from "../../Resource/constants";
 
 export const connect = async () => {
   try {

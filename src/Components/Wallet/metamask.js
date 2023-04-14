@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { defaultChainConfig } from "../constants";
+import { defaultChainConfig } from "../../Resource/constants";
 
 const hexToInt = (s) => {
   const bn = ethers.BigNumber.from(s);

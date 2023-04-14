@@ -1,7 +1,6 @@
-import * as ethers from "ethers";
-import abi from "../abi.json";
+import abi from "../../Resource/abi.json";
 import Web3 from "web3"
-import { ContractAddress } from '../constants'
+import { ContractAddress } from '../../Resource/constants'
 
 // connect to metamask using web3
 export const connectWallet = async () => {
