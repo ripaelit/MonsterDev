@@ -13,7 +13,7 @@ import {
 import { AiOutlineClose } from "react-icons/ai";
 import { navLinks } from "../Resource/data";
 import Logo from "../Resource/images/logo.png";
-import WalletConnectButton from './Wallet/ConnectWalletButton'
+import ConnectWalletButton from './Wallet/ConnectWalletButton'
 
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
 const injected = injectedModule()
@@ -93,7 +93,7 @@ const Header = () => {
           >
             Connect Wallet
           </button> */}
-          <WalletConnectButton />
+          <ConnectWalletButton />
         </div>
       </div>
 
