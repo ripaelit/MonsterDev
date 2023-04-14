@@ -11,15 +11,19 @@ const WalletConnectButton = () => {
   const walletAddress = useSelector((state) => {
     return state.user.address
   })
+
   const correctChain = useSelector((state) => {
     return state.user.correctChain
   })
+
   const user = useSelector((state) => {
     return state.user
   })
+
   const needsOnboard = useSelector((state) => {
     return state.user.needsOnboard
   })
+
   const connectWalletPressed = async () => {
     if (needsOnboard) {
       const onboarding = new MetaMaskOnboarding()
@@ -27,6 +31,16 @@ const WalletConnectButton = () => {
     } else {
       dispatch(connectAccount())
     }
+  }
+
+  const onWrongChainModalChangeChain = () => {
+    dispatch(setShowWrongChainModal(false))
+    dispatch(chainConnect())
+    console.log("onWrongChainModalChangeChain:::")
+  }
+
+  const logout = async () => {
+    dispatch(onLogout())
   }
 
   useEffect(() => {
@@ -73,16 +87,6 @@ const WalletConnectButton = () => {
     }
   }, [walletAddress, correctChain])
 
-  const onWrongChainModalChangeChain = () => {
-    dispatch(setShowWrongChainModal(false))
-    dispatch(chainConnect())
-    console.log("onWrongChainModalChangeChain:::")
-  }
-
-  const logout = async () => {
-    dispatch(onLogout())
-  }
-
   return (
     <div>
       {
@@ -97,7 +101,9 @@ const WalletConnectButton = () => {
         </button>
       }
       {
-        walletAddress && !correctChain && 
+        walletAddress &&
+        !correctChain &&
+        // !user.showWrongChainModal &&
         <button
           onClick={() => {
             onWrongChainModalChangeChain()
