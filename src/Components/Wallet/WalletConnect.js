@@ -3,37 +3,37 @@ import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import * as walletMetamask from '../../Resource/helpers/wallet-metamask'
-import * as walletConnect from '../../Resource/helpers/wallet-connect'
-import * as walletDefiwallet from '../../Resource/helpers/wallet-defiwallet'
+import * as walletMetamask from '../../Resource/helpers/metamask'
+import * as walletConnect from '../../Resource/helpers/walletconnect'
+import * as walletDefiwallet from '../../Resource/helpers/defiwallet'
 
-const style = {
+const boxStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   maxWidth: 350,
   width: '70%',
-  backgroundColor: 'rgba(196,196,196,0.7)',
+  backgroundColor: 'rgba(196, 196, 196, 0.7)',
   boxShadow: 24,
   borderRadius: 5,
   p: 4
 }
 
-const header = {
+const headerStyle = {
   fontSize: '25px',
   fontWeight: 600,
   fontFamily: 'Chewy',
   color: '#280D5f'
 }
 
-const button = {
+const buttonStyle = {
   marginTop: 2,
   fontSize: 20,
   fontFamily: 'Chewy',
-  background: 'rgba(253,218,51,0.8)',
+  background: 'rgba(253, 218 , 51, 0.8)',
   '&:hover': {
-    background: 'rgba(253,218,158,0.8)'
+    background: 'rgba(253, 218, 158, 0.8)'
   },
   padding: '10px 30px',
   display: 'flex',
@@ -60,7 +60,8 @@ export default function KeepMountedModal(props) {
       default:
         wallet = await walletMetamask.connect()
     }
-    if (wallet !== null) props.setWallet(wallet)
+    if (wallet !== null)
+      props.setWallet(wallet)
     // console.log('end connecting wallet')
   }
 
@@ -73,16 +74,16 @@ export default function KeepMountedModal(props) {
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={boxStyle}>
           <Typography
             id="keep-mounted-modal-title"
             variant="h6"
             component="h2"
-            sx={header}
+            sx={headerStyle}
           >
             Connect Wallet
           </Typography>
-          <Button fullWidth sx={button} onClick={() => onConnect('metamask')}>
+          <Button fullWidth sx={buttonStyle} onClick={() => onConnect('metamask')}>
             <img
               src="/images/metamask.svg"
               alt="metamask"
@@ -94,7 +95,7 @@ export default function KeepMountedModal(props) {
           </Button>
           <Button
             fullWidth
-            sx={button}
+            sx={buttonStyle}
             onClick={() => onConnect('walletconnect')}
           >
             <img
@@ -106,7 +107,7 @@ export default function KeepMountedModal(props) {
             />
             Wallet Connect
           </Button>
-          <Button fullWidth sx={button} onClick={() => onConnect('defiwallet')}>
+          <Button fullWidth sx={buttonStyle} onClick={() => onConnect('defiwallet')}>
             <img
               src="/images/crypto.png"
               alt="crypto"
