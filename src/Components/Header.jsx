@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
-// import { useDispatch, useSelector } from 'react-redux'
 import {
   FaBars,
   FaCross,
@@ -35,15 +34,6 @@ const Header = () => {
   const pathname = useLocation().pathname;
   const [showMobMenu, setShowMobMenu] = useState(false);
   const handleMenuClick = () => setShowMobMenu((prev) => !prev);
-  // const dispatch = useDispatch()
-  const connectWalletPressed = async () => {
-    // if (needsOnboard) {
-    //   const onboarding = new MetaMaskOnboarding()
-    //   onboarding.startOnboarding()
-    // } else {
-      // dispatch(connectAccount())
-    // }
-  }
 
   return (
     <div className="bg-secondaryDark fixed w-full shadow-xl">

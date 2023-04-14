@@ -23,18 +23,18 @@ const Mintpage = () => {
   }
 
   async function updatePrice() {
-    if (!nftContract) {
-      // console.log("useEffect: nftContract is null")
-      return;
-    }
-    if (!walletAddress) {
-      // console.log("useEffect: walletAddress is null")
-      return;
-    }
-    if (!provider) {
-      // console.log("useEffect: provider is null")
-      return;
-    }
+    // if (!nftContract) {
+    //   console.log("useEffect: nftContract is null")
+    //   return;
+    // }
+    // if (!walletAddress) {
+    //   console.log("useEffect: walletAddress is null")
+    //   return;
+    // }
+    // if (!provider) {
+    //   console.log("useEffect: provider is null")
+    //   return;
+    // }
     let _supply = (await nftContract.totalSupply()).toString()
     setSupply(_supply)
 
