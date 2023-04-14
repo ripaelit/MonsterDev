@@ -154,13 +154,13 @@ export const connectAccount =
       // console.log('provider:::', providerOptions.walletconnect)
     }
 
-    const web3ModalWillShowUp = !localStorage.getItem(
-      'WEB3_CONNECT_CACHED_PROVIDER'
-    )
+    // const web3ModalWillShowUp = !localStorage.getItem(
+    //   'WEB3_CONNECT_CACHED_PROVIDER'
+    // )
 
-    if (process.env.NODE_ENV !== 'production') {
-      // console.log('web3ModalWillShowUp: ', web3ModalWillShowUp)
-    }
+    // if (process.env.NODE_ENV !== 'production') {
+    //   console.log('web3ModalWillShowUp: ', web3ModalWillShowUp)
+    // }
 
     const web3Modal = new Web3Modal({
       cacheProvider: true, // optional
