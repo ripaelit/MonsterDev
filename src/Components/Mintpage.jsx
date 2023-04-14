@@ -38,7 +38,7 @@ const Mintpage = () => {
 
     if (isWhitelisted) {
       let balance = (await nftContract.balanceOf(walletAddress.toString())).toString()
-      if (Number(balance) > 25) {
+      if (Number(balance) < 25) {
         setMintPrice(newWhitelistPrice)
         return
       }
