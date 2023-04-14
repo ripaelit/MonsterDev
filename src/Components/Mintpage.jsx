@@ -133,46 +133,48 @@ const Mintpage = () => {
           </div>
           <div className="">
             <table className="w-full text-lg">
-              <tr className="border-t border-opacity-50">
-                <td className="py-3 pl-3">
-                  <p className="font-semibold ">Public Price</p>
-                </td>
-                <td>
-                  <p className="font-semibold ">{publicPrice} CRO</p>
-                </td>
-              </tr>
-              <tr className="border-t border-opacity-50">
-                <td className="py-3 pl-3">
-                  <p className="font-semibold ">Whitelist Price</p>
-                </td>
-                <td>
-                  <p className="font-semibold ">{whitelistPrice} CRO</p>
-                </td>
-              </tr>
-              <tr className="border-t border-opacity-50">
-                <td className="py-3 pl-3">
-                  <p className="font-semibold ">Whitelist max mint</p>
-                </td>
-                <td>
-                  <p className="font-semibold ">25 NFTs</p>
-                </td>
-              </tr>
-              <tr className="border-t border-opacity-50">
-                <td className="py-3 pl-3">
-                  <p className="font-semibold ">Max mint per tx</p>
-                </td>
-                <td>
-                  <p className="font-semibold ">25 NFTs</p>
-                </td>
-              </tr>
-              <tr className="border-t border-opacity-50">
+              <tbody>
+                <tr className="border-t border-opacity-50">
+                  <td className="py-3 pl-3">
+                    <p className="font-semibold ">Public Price</p>
+                  </td>
+                  <td>
+                    <p className="font-semibold ">{publicPrice} CRO</p>
+                  </td>
+                </tr>
+                <tr className="border-t border-opacity-50">
+                  <td className="py-3 pl-3">
+                    <p className="font-semibold ">Whitelist Price</p>
+                  </td>
+                  <td>
+                    <p className="font-semibold ">{whitelistPrice} CRO</p>
+                  </td>
+                </tr>
+                <tr className="border-t border-opacity-50">
+                  <td className="py-3 pl-3">
+                    <p className="font-semibold ">Whitelist max mint</p>
+                  </td>
+                  <td>
+                    <p className="font-semibold ">25 NFTs</p>
+                  </td>
+                </tr>
+                <tr className="border-t border-opacity-50">
+                  <td className="py-3 pl-3">
+                    <p className="font-semibold ">Max mint per tx</p>
+                  </td>
+                  <td>
+                    <p className="font-semibold ">25 NFTs</p>
+                  </td>
+                </tr>
+                <tr className="border-t border-opacity-50">
                 <td className="py-3 pl-3">
                   <p className="font-semibold "></p>
                 </td>
                 <td>
                   <p className="font-semibold "></p>
                 </td>
-              </tr>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
