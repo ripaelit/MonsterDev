@@ -7,6 +7,7 @@ const ethers = require('ethers');
 const Mintpage = () => {
   const [mintCount, setMintCount] = useState(0)
   const [mintPrice, setMintPrice] = useState('0')
+  const [supply, setSupply] = useState('0')
   const [publicPrice, setPublicPrice] = useState('0')
   const [whitelistPrice, setWhitelistPrice] = useState('0')
 
@@ -42,6 +43,9 @@ const Mintpage = () => {
         console.log("useEffect: provider is null")
         return;
       }
+
+      let _supply = (await nftContract.totalSupply()).toString()
+      setSupply(_supply)
 
       let newPublicPrice = weiToEth((await nftContract.cost()).toString())
       setPublicPrice(weiToEth((await nftContract.cost()).toString()))
