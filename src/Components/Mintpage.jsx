@@ -23,31 +23,19 @@ const Mintpage = () => {
   }
 
   async function updatePrice() {
-    // if (!nftContract) {
-    //   console.log("useEffect: nftContract is null")
-    //   return;
-    // }
-    // if (!walletAddress) {
-    //   console.log("useEffect: walletAddress is null")
-    //   return;
-    // }
-    // if (!provider) {
-    //   console.log("useEffect: provider is null")
-    //   return;
-    // }
     if (!nftContract || !walletAddress || !provider) {
       return
-    } else {
-      let _supply = (await nftContract.totalSupply()).toString()
-      setSupply(_supply)
+    }
+    let _supply = (await nftContract.totalSupply()).toString()
+    setSupply(_supply)
 
-      let newPublicPrice = weiToEth((await nftContract.cost()).toString())
-      setPublicPrice(weiToEth((await nftContract.cost()).toString()))
+    let newPublicPrice = weiToEth((await nftContract.cost()).toString())
+    setPublicPrice(weiToEth((await nftContract.cost()).toString()))
 
-      let newWhitelistPrice = weiToEth((await nftContract.wlCost()).toString())
-      setWhitelistPrice(weiToEth((await nftContract.wlCost()).toString()))
+    let newWhitelistPrice = weiToEth((await nftContract.wlCost()).toString())
+    setWhitelistPrice(weiToEth((await nftContract.wlCost()).toString()))
 
-      let isWhitelisted = await nftContract.whitelisted(walletAddress.toString())
+    let isWhitelisted = await nftContract.whitelisted(walletAddress.toString())
 
     if (isWhitelisted) {
       let balance = await nftContract.balanceOf(walletAddress.toString())
