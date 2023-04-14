@@ -33,8 +33,6 @@ const userSlice = createSlice({
       // TODO: QUICKFIX. Need to make as independent reducers later.
       if (action.payload.monsterContract)
         state.monsterContract = action.payload.monsterContract
-      // if (action.payload.tokenContract)
-      //   state.tokenContract = action.payload.tokenContract
     },
     setIsMetamask(state, action) {
       state.isMetamask = action.payload.isMetamask
@@ -141,7 +139,7 @@ export const connectAccount =
       providerOptions.walletconnect = {
         package: WalletConnectProvider, // required
         options: {
-          chainId: 25,
+          chainId: 25, //cronos mainnet
           rpc: {
             25: 'https://evm-t3.cronos.org'
           },
@@ -221,20 +219,20 @@ export const connectAccount =
       if (firstRun) {
         dispatch(appAuthInitFinished())
       }
-      web3Provider.on('DeFiConnectorDeactivate', (error) => {
+      web3Provider.on('DeFiConnectorDeactivate', () => {
         dispatch(onLogout())
       })
-      web3Provider.on('disconnect', (error) => {
+      web3Provider.on('disconnect', () => {
         dispatch(onLogout())
       })
-      web3Provider.on('accountsChanged', (accounts) => {
+      web3Provider.on('accountsChanged', () => {
         dispatch(onLogout())
         dispatch(connectAccount())
       })
-      web3Provider.on('DeFiConnectorUpdate', (accounts) => {
+      web3Provider.on('DeFiConnectorUpdate', () => {
         window.location.reload()
       })
-      web3Provider.on('chainChanged', (chainId) => {
+      web3Provider.on('chainChanged', () => {
         // Handle the new chain.
         // Correctly handling chain changes can be complicated.
         // We recommend reloading the page unless you have good reason not to.
@@ -371,8 +369,8 @@ export const chainConnect = (type) => async (dispatch) => {
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: cid }]
           })
-        } catch (addError) {
-          console.error(addError)
+        } catch (err) {
+          console.error(err)
           window.location.reload()
         }
       }
