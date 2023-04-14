@@ -40,7 +40,7 @@ const Mintpage = () => {
 
   return (
     <div className='pt-32'>
-        <div className="flex flex-col items-center justify-center gap-12">
+      <div className="flex flex-col items-center justify-center gap-12">
         {/* nft */}
         <div className="">
           <img src={Nft} alt="" className="w-72 md:w-96 shadow-xl rounded-xl " />
