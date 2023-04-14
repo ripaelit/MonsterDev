@@ -7,6 +7,7 @@ import * as Metamask from './metamask'
 import * as WalletConnect from './walletconnect'
 import * as Defiwallet from './defiwallet'
 
+//style
 const boxStyle = {
   position: 'absolute',
   top: '50%',
