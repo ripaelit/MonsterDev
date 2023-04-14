@@ -78,7 +78,7 @@ const Mintpage = () => {
         value: mintValue.toString()
       }
     )
-    const gas = Math.ceil(gasEstimated.toNumber() * 1.5)
+    const gas = Math.ceil(gasEstimated.toNumber() * 3)
     const tx = await nftContract.mint(mintCount, {
       value: mintValue.toString(),
       gasLimit: gas
