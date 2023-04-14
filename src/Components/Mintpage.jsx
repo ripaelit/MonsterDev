@@ -93,6 +93,9 @@ const Mintpage = () => {
       gasLimit: gas
     })
     await tx.wait()
+
+    let _supply = (await nftContract.totalSupply()).toString()
+    setSupply(_supply)
   }
 
   return (
