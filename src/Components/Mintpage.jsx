@@ -35,16 +35,19 @@ const Mintpage = () => {
     //   console.log("useEffect: provider is null")
     //   return;
     // }
-    let _supply = (await nftContract.totalSupply()).toString()
-    setSupply(_supply)
+    if (!nftContract || !walletAddress || !provider) {
+      return
+    } else {
+      let _supply = (await nftContract.totalSupply()).toString()
+      setSupply(_supply)
 
-    let newPublicPrice = weiToEth((await nftContract.cost()).toString())
-    setPublicPrice(weiToEth((await nftContract.cost()).toString()))
+      let newPublicPrice = weiToEth((await nftContract.cost()).toString())
+      setPublicPrice(weiToEth((await nftContract.cost()).toString()))
 
-    let newWhitelistPrice = weiToEth((await nftContract.wlCost()).toString())
-    setWhitelistPrice(weiToEth((await nftContract.wlCost()).toString()))
+      let newWhitelistPrice = weiToEth((await nftContract.wlCost()).toString())
+      setWhitelistPrice(weiToEth((await nftContract.wlCost()).toString()))
 
-    let isWhitelisted = await nftContract.whitelisted(walletAddress.toString())
+      let isWhitelisted = await nftContract.whitelisted(walletAddress.toString())
 
     if (isWhitelisted) {
       let balance = await nftContract.balanceOf(walletAddress.toString())
@@ -67,27 +70,28 @@ const Mintpage = () => {
     setMintCount((prev) => (prev > 0) ? (prev - 1) : prev)
   }
   const mintMonster = async () => {
-    if (!nftContract) {
+    if (!nftContract || !walletAddress || !provider) {
       // console.log("nftContract is null!!!")
-      return;
-    }
-    const mintValue = await nftContract.quoteMintValue(mintCount)
-    // console.log("mintValue:::", mintValue, mintValue.toString(), "mintCount:::", mintCount)
-    const gasEstimated = await nftContract.estimateGas.mint(
-      mintCount,
-      {
-        value: mintValue.toString()
-      }
-    )
-    const gas = Math.ceil(gasEstimated.toNumber() * 3)
-    const tx = await nftContract.mint(mintCount, {
-      value: mintValue.toString(),
-      gasLimit: gas
-    })
-    await tx.wait()
+      return
+    } else {
+      const mintValue = await nftContract.quoteMintValue(mintCount)
+      // console.log("mintValue:::", mintValue, mintValue.toString(), "mintCount:::", mintCount)
+      const gasEstimated = await nftContract.estimateGas.mint(
+        mintCount,
+        {
+          value: mintValue.toString()
+        }
+      )
+      const gas = Math.ceil(gasEstimated.toNumber() * 3)
+      const tx = await nftContract.mint(mintCount, {
+        value: mintValue.toString(),
+        gasLimit: gas
+      })
+      await tx.wait()
 
-    let _supply = (await nftContract.totalSupply()).toString()
-    setSupply(_supply)
+      let _supply = (await nftContract.totalSupply()).toString()
+      setSupply(_supply)
+    }
   }
 
   return (

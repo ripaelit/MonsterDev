@@ -167,35 +167,35 @@ export const connectAccount =
       providerOptions // required
     })
 
-    const web3provider = await web3Modal
+    const web3Provider = await web3Modal
       .connect()
-      .then((web3provider) => web3provider)
+      .then((web3Provider) => web3Provider)
       .catch((error) => {
         captureException(error, { extra: { firstRun } })
         // console.log('Could not get a wallet connection', error)
         return null
       })
 
-    // console.log('web3provider:::', web3provider)
+    // console.log('web3Provider:::', web3Provider)
 
-    if (!web3provider) {
+    if (!web3Provider) {
       dispatch(onLogout())
       return
     }
 
-    dispatch(setIsMetamask({ isMetamask: web3provider.isMetaMask }))
+    dispatch(setIsMetamask({ isMetamask: web3Provider.isMetaMask }))
 
     try {
       dispatch(connectingWallet({ connecting: true }))
-      const provider = new ethers.providers.Web3Provider(web3provider)
-      const cid = await web3provider.request({
+      const provider = new ethers.providers.Web3Provider(web3Provider)
+      const cid = await web3Provider.request({
         method: 'net_version'
       })
       // console.log('cid:::', { cid, chainId: chainInfo.chainId })
       const correctChain =
         Number(cid) === chainInfo.chainId ||
         Number(cid) === Number(chainInfo.chainId)
-      const accounts = await web3provider.request({
+      const accounts = await web3Provider.request({
         method: 'eth_accounts',
         params: [{ chainId: cid }]
       })
@@ -221,20 +221,20 @@ export const connectAccount =
       if (firstRun) {
         dispatch(appAuthInitFinished())
       }
-      web3provider.on('DeFiConnectorDeactivate', (error) => {
+      web3Provider.on('DeFiConnectorDeactivate', (error) => {
         dispatch(onLogout())
       })
-      web3provider.on('disconnect', (error) => {
+      web3Provider.on('disconnect', (error) => {
         dispatch(onLogout())
       })
-      web3provider.on('accountsChanged', (accounts) => {
+      web3Provider.on('accountsChanged', (accounts) => {
         dispatch(onLogout())
         dispatch(connectAccount())
       })
-      web3provider.on('DeFiConnectorUpdate', (accounts) => {
+      web3Provider.on('DeFiConnectorUpdate', (accounts) => {
         window.location.reload()
       })
-      web3provider.on('chainChanged', (chainId) => {
+      web3Provider.on('chainChanged', (chainId) => {
         // Handle the new chain.
         // Correctly handling chain changes can be complicated.
         // We recommend reloading the page unless you have good reason not to.

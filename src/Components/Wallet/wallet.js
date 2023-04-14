@@ -62,7 +62,7 @@ export const isConnected = async () => {
 export const switchNetwork = async () => {
   const { ethereum } = window;
   if (ethereum) {
-    // cronos id id 338 ( testnet )
+    // cronos chainId: 338 ( testnet )
     const chainId = await ethereum.request({ method: "eth_chainId" });
     if (chainId !== "0x4") {
       await ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x4" }] });
@@ -86,69 +86,69 @@ export const getTokens = async () => {
 }
 
 // mint x number of nfts
-export const mintNFT = async (count = 1) => {
-  const { ethereum } = window;
-  if (ethereum) {
-    await connectContract();
-    //sign transaction via Metamask
-    try {
-      const txHash = await window.ethereum
-        .request({
-          method: 'eth_sendTransaction',
-          params: [{
-            from: window.ethereum.selectedAddress,
-            to: ContractAddress,
-            gas: '0x105208',
-            data: window.contract
-              .methods
-              .mint(parseInt(count))
-              .encodeABI(),
-          }],
-        });
-      console.log({
-        success: true,
-        status: "✅ Check out your transaction on Etherscan: https://goerli.etherscan.io/tx/" + txHash
-      })
-    } catch (error) {
-      console.log({
-        success: false,
-        status: "😥 Something went wrong: " + error.message
-      })
-    }
-  } else {
-    // create an alter
-    alert("Please install metamask");
-  }
-}
+// export const mintNFT = async (count = 1) => {
+//   const { ethereum } = window;
+//   if (ethereum) {
+//     await connectContract();
+//     //sign transaction via Metamask
+//     try {
+//       const txHash = await window.ethereum
+//         .request({
+//           method: 'eth_sendTransaction',
+//           params: [{
+//             from: window.ethereum.selectedAddress,
+//             to: ContractAddress,
+//             gas: '0x105208',
+//             data: window.contract
+//               .methods
+//               .mint(parseInt(count))
+//               .encodeABI(),
+//           }],
+//         });
+//       console.log({
+//         success: true,
+//         status: "✅ Check out your transaction on Etherscan: https://goerli.etherscan.io/tx/" + txHash
+//       })
+//     } catch (error) {
+//       console.log({
+//         success: false,
+//         status: "😥 Something went wrong: " + error.message
+//       })
+//     }
+//   } else {
+//     // create an alter
+//     alert("Please install metamask");
+//   }
+// }
 
 // get all the nfts (current contracts) from the user account
-export const init = async () => {
-  let provider = window.ethereum;
-  let selectedAccount;
+// export const init = async () => {
+//   let provider = window.ethereum;
+//   let selectedAccount;
 
-  if (typeof provider !== 'undefined') {
+//   if (typeof provider !== 'undefined') {
 
-    provider
-      .request({ method: 'eth_requestAccounts' })
-      .then((accounts) => {
-        selectedAccount = accounts[0];
-        console.log(`Selected account is ${selectedAccount}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    window.ethereum.on('accountsChanged', function (accounts) {
-      selectedAccount = accounts[0];
-      console.log(`Selected account changed to ${selectedAccount}`);
-    });
-  }
-  const web3 = new Web3(provider);
-  const networkId = await web3.eth.net.getId();
-  if (networkId === 338 || networkId === 25) {
-    const contract = new web3.eth.Contract(abi, ContractAddress);
-    return { web3, networkId, contract };
-  } else {
-    // // ask to switch network
-    // const switchNetwork = await switchNetwork();
-  }
-};
+//     provider
+//       .request({ method: 'eth_requestAccounts' })
+//       .then((accounts) => {
+//         selectedAccount = accounts[0];
+//         console.log(`Selected account is ${selectedAccount}`);
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//     window.ethereum.on('accountsChanged', function (accounts) {
+//       selectedAccount = accounts[0];
+//       console.log(`Selected account changed to ${selectedAccount}`);
+//     });
+//   }
+//   const web3 = new Web3(provider);
+//   const networkId = await web3.eth.net.getId();
+//   if (networkId === 338 || networkId === 25) {
+//     const contract = new web3.eth.Contract(abi, ContractAddress);
+//     return { web3, networkId, contract };
+//   } else {
+//     // // ask to switch network
+//     // const switchNetwork = await switchNetwork();
+//   }
+// };
