@@ -44,12 +44,15 @@ const Mintpage = () => {
     let newWhitelistPrice = weiToEth((await nftContract.wlCost()).toString())
     setWhitelistPrice(weiToEth((await nftContract.wlCost()).toString()))
 
-    let balance = await nftContract.balanceOf(walletAddress.toString())
-    if ((new BigNumber(balance.toString())).gt(25)) {
-      setMintPrice(newPublicPrice)
-    } else {
-      setMintPrice(newWhitelistPrice)
+    let isWhitelisted = await nftContract.whitelisted(walletAddress.toString())
+
+    if (isWhitelisted) {
+      let balance = await nftContract.balanceOf(walletAddress.toString())
+      if ((new BigNumber(balance.toString())).lt(25)) {
+        setMintPrice(newWhitelistPrice)
+      }
     }
+    setMintPrice(newPublicPrice)
   }
 
   useEffect(() => {
