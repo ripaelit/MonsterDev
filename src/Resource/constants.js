@@ -1,7 +1,7 @@
 
 // Testnet Cronos
 // export const ContractAddress = '0xf71d138Fc195f40785EEEAf1259C3A0eb48C6549'
-// export const defaultChainConfig = {
+// export const defaultChainInfo = {
 //   chainId: 338,
 //   chainName: 'Cronos Testnet',
 //   rpcUrls: ['https://evm-t3.cronos.org'],
@@ -17,7 +17,7 @@
 // Mainnet Cronos
 export const ContractAddress = '0x8f2836874DC85B81C2CF0421aF593E6E8d5DffA1'
 
-export const defaultChainConfig = {
+export const defaultChainInfo = {
   chainId: "0x19",
   chainName: "Cronos Mainnet Beta",
   rpcUrls: ["https://evm.cronos.org/"],

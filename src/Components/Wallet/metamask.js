@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { defaultChainConfig } from "../../Resource/constants";
+import { defaultChainInfo } from "../../Resource/constants";
 
 const hexToInt = (s) => {
   const bn = ethers.BigNumber.from(s);
@@ -12,7 +12,7 @@ export const switchNetwork = async () => {
   try {
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
-      params: [{ chainId: defaultChainConfig.chainId }],
+      params: [{ chainId: defaultChainInfo.chainId }],
     });
   } catch (err) {
     // console.log(err);
@@ -20,11 +20,11 @@ export const switchNetwork = async () => {
       method: "wallet_addEthereumChain",
       params: [
         {
-          chainId: defaultChainConfig.chainId,
-          chainName: defaultChainConfig.chainName,
-          rpcUrls: defaultChainConfig.rpcUrls,
-          nativeCurrency: defaultChainConfig.nativeCurrency,
-          blockExplorerUrls: defaultChainConfig.blockExplorerUrls,
+          chainId: defaultChainInfo.chainId,
+          chainName: defaultChainInfo.chainName,
+          rpcUrls: defaultChainInfo.rpcUrls,
+          nativeCurrency: defaultChainInfo.nativeCurrency,
+          blockExplorerUrls: defaultChainInfo.blockExplorerUrls,
         },
       ],
     });
@@ -36,7 +36,7 @@ export const connectMetamask = async () => {
   // console.log("this function is called>>>")
   try {
     const chainId = await window.ethereum.request({ method: "eth_chainId" });
-    if (!(chainId === defaultChainConfig.chainId)) {
+    if (!(chainId === defaultChainInfo.chainId)) {
       await switchNetwork();
       await delay(2000);
     }
@@ -53,7 +53,7 @@ export const connectMetamask = async () => {
       address: accounts[0],
       browserWeb3Provider: new ethers.providers.Web3Provider(window.ethereum),
       serverWeb3Provider: new ethers.providers.JsonRpcProvider(
-        defaultChainConfig.rpcUrls[0]
+        defaultChainInfo.rpcUrls[0]
       ),
       connected: true,
       chainId: hexToInt(

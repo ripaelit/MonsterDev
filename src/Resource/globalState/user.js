@@ -6,7 +6,7 @@ import WalletConnectProvider from '@walletconnect/web3-provider'
 import { appAuthInitFinished } from './initSlice'
 import { captureException } from '@sentry/react'
 import abi from '../abi.json'
-import { ContractAddress, defaultChainConfig } from '../../Resource/constants'
+import { ContractAddress, defaultChainInfo } from '../../Resource/constants'
 
 let chainInfo
 const userSlice = createSlice({
@@ -99,7 +99,7 @@ export const connectAccount = (firstRun = false, type = '') =>
   async (dispatch) => {
     // console.log('currentPath:::', window.location.pathname)
     // console.log("connectAccount function is called!!!")
-    chainInfo = defaultChainConfig
+    chainInfo = defaultChainInfo
     const providerOptions = {
       injected: {
         display: {
@@ -139,9 +139,9 @@ export const connectAccount = (firstRun = false, type = '') =>
       providerOptions.walletconnect = {
         package: WalletConnectProvider, // required
         options: {
-          chainId: defaultChainConfig.chainId, //cronos mainnet
+          chainId: defaultChainInfo.chainId, //cronos mainnet
           rpc: {
-            25: defaultChainConfig.rpcUrls[0]
+            25: defaultChainInfo.rpcUrls[0]
           },
           network: 'cronos',
           metadata: {
@@ -336,7 +336,7 @@ export const initProvider = () => async (dispatch) => {
 }
 
 export const chainConnect = (type) => async (dispatch) => {
-  chainInfo = defaultChainConfig
+  chainInfo = defaultChainInfo
 
   if (window.ethereum) {
     const cid = ethers.utils.hexValue(BigNumber.from(chainInfo.chainId))
