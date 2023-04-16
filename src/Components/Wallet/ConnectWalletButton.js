@@ -25,7 +25,7 @@ const ConnectWalletButton = () => {
   })
 
   const handleConnectWalletPressed = async () => {
-    // console.log("connectWallet function is called!!!")
+    // console.log("connectWallet func is called!!!")
     if (needsOnboard) {
       const onboarding = new MetaMaskOnboarding()
       onboarding.startOnboarding()
@@ -35,7 +35,7 @@ const ConnectWalletButton = () => {
   }
 
   const handleWrongChain = () => {
-    // console.log("handleWrongChain function is called!!!")
+    // console.log("handleWrongChain func is called!!!")
     dispatch(setShowWrongChainModal(false))
     dispatch(chainConnect())
   }

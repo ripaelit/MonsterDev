@@ -28,7 +28,7 @@ const userSlice = createSlice({
   },
 
   reducers: {
-    accountChanged(state, action) {
+    onChangeAccount(state, action) {
       state.balance = action.payload.balance
       // TODO: QUICKFIX. Need to make as independent reducers later.
       if (action.payload.monsterContract)
@@ -77,218 +77,219 @@ const userSlice = createSlice({
       state.address = ''
       state.balance = null
     },
-    balanceUpdated(state, action) {
+    onUpdateBalance(state, action) {
       state.balance = action.payload
-    }
+    },
   }
 })
 
 export const {
-  accountChanged,
-  onProvider,
-  connectingWallet,
+  onChangeAccount,
+  setIsMetamask,
   onCorrectChain,
-  setShowWrongChainModal,
+  onProvider,
   onBasicAccountData,
+  connectingWallet,
+  setShowWrongChainModal,
   onLogout,
-  setIsMetamask
+  onUpdateBalance,
 } = userSlice.actions
+
 export const user = userSlice.reducer
 
-export const connectAccount = (firstRun = false, type = '') =>
-  async (dispatch) => {
-    // console.log('currentPath:::', window.location.pathname)
-    // console.log("connectAccount function is called!!!")
-    chainInfo = defaultChainInfo
-    const providerOptions = {
-      injected: {
-        display: {
-          logo: 'https://github.com/MetaMask/brand-resources/raw/master/SVG/metamask-fox.svg',
-          name: 'MetaMask',
-          description: 'Connect with MetaMask in your browser'
-        },
-        package: null
-      }
-      // 'custom-defiwallet': {
-      //   display: {
-      //     logo: '/assets/cdc_logo.svg',
-      //     name: 'Crypto.com DeFi Wallet',
-      //     description: 'Connect with the CDC DeFi Wallet',
-      //   },
-      //   options: {},
-      //   package: DefiWalletConnectProvider,
-      //   connector: async (ProviderPackage, options) => {
-      //     const connector = new DeFiWeb3Connector({
-      //       supportedChainIds: [25, 338],
-      //       rpc: { 25: 'https://gateway.nebkas.ro', 338: 'https://cronos-testnet-3.crypto.org:8545/' },
-      //       pollingInterval: 15000,
-      //       metadata: {
-      //         icons: ['https://ebisusbay.com/vector%20-%20face.svg'],
-      //         description: 'Cronos NFT Marketplace',
-      //       },
-      //     });
+export const connectAccount = (firstRun = false, type = '') => async (dispatch) => {
+  // console.log("connectAccount func is called!!!")
+  chainInfo = defaultChainInfo
+  const providerOptions = {
+    injected: {
+      display: {
+        logo: 'https://github.com/MetaMask/brand-resources/raw/master/SVG/metamask-fox.svg',
+        name: 'MetaMask',
+        description: 'Connect with MetaMask in your browser'
+      },
+      package: null
+    },
+    // 'custom-defiwallet': {
+    //   display: {
+    //     logo: '/assets/cdc_logo.svg',
+    //     name: 'Crypto.com DeFi Wallet',
+    //     description: 'Connect with the CDC DeFi Wallet',
+    //   },
+    //   options: {},
+    //   package: DefiWalletConnectProvider,
+    //   connector: async (ProviderPackage, options) => {
+    //     const connector = new DeFiWeb3Connector({
+    //       supportedChainIds: [25, 338],
+    //       rpc: { 25: 'https://gateway.nebkas.ro', 338: 'https://cronos-testnet-3.crypto.org:8545/' },
+    //       pollingInterval: 15000,
+    //       metadata: {
+    //         icons: ['https://ebisusbay.com/vector%20-%20face.svg'],
+    //         description: 'Cronos NFT Marketplace',
+    //       },
+    //     });
 
-      //     await connector.activate();
-      //     let provider = await connector.getProvider();
-      //     return provider;
-      //   },
-      // },
-    }
-
-    if (type !== 'defi') {
-      providerOptions.walletconnect = {
-        package: WalletConnectProvider, // required
-        options: {
-          chainId: defaultChainInfo.chainId, //cronos mainnet
-          rpc: {
-            25: defaultChainInfo.rpcUrls[0]
-          },
-          network: 'cronos',
-          metadata: {
-            icons: ['https://ebisusbay.com/vector%20-%20face.svg']
-          }
-        }
-      }
-      // console.log('provider:::', providerOptions.walletconnect)
-    }
-
-    // const web3ModalWillShowUp = !localStorage.getItem(
-    //   'WEB3_CONNECT_CACHED_PROVIDER'
-    // )
-
-    // if (process.env.NODE_ENV !== 'production') {
-    //   console.log('web3ModalWillShowUp: ', web3ModalWillShowUp)
-    // }
-
-    const web3Modal = new Web3Modal({
-      cacheProvider: true, // optional
-      providerOptions // required
-    })
-
-    const web3Provider = await web3Modal
-      .connect()
-      .then((web3Provider) => web3Provider)
-      .catch((error) => {
-        captureException(error, { extra: { firstRun } })
-        // console.log('Could not get a wallet connection', error)
-        return null
-      })
-
-    // console.log('web3Provider:::', web3Provider)
-
-    if (!web3Provider) {
-      dispatch(onLogout())
-      return
-    }
-
-    dispatch(setIsMetamask({ isMetamask: web3Provider.isMetaMask }))
-
-    try {
-      dispatch(connectingWallet({ connecting: true }))
-      const provider = new ethers.providers.Web3Provider(web3Provider)
-      const cid = await web3Provider.request({
-        method: 'net_version'
-      })
-      // console.log('cid:::', { cid, chainId: chainInfo.chainId })
-      const correctChain =
-        Number(cid) === chainInfo.chainId ||
-        Number(cid) === Number(chainInfo.chainId)
-      const accounts = await web3Provider.request({
-        method: 'eth_accounts',
-        params: [{ chainId: cid }]
-      })
-      // console.log("account:::", accounts[0])
-      const address = accounts[0]
-      const signer = provider.getSigner()
-      if (!correctChain) {
-        if (firstRun) {
-          dispatch(appAuthInitFinished())
-        }
-        await dispatch(setShowWrongChainModal(true))
-      }
-
-      await dispatch(
-        onBasicAccountData({
-          address: address,
-          provider: provider,
-          web3modal: web3Modal,
-          correctChain: correctChain,
-          needsOnboard: false,
-        })
-      )
-      if (firstRun) {
-        dispatch(appAuthInitFinished())
-      }
-      web3Provider.on('DeFiConnectorDeactivate', () => {
-        dispatch(onLogout())
-      })
-      web3Provider.on('disconnect', () => {
-        dispatch(onLogout())
-      })
-      web3Provider.on('accountsChanged', () => {
-        dispatch(onLogout())
-        dispatch(connectAccount())
-      })
-      web3Provider.on('DeFiConnectorUpdate', () => {
-        window.location.reload()
-      })
-      web3Provider.on('chainChanged', () => {
-        // Handle the new chain.
-        // Correctly handling chain changes can be complicated.
-        // We recommend reloading the page unless you have good reason not to.
-        window.location.reload()
-      })
-
-      let balance
-      let monsterContract
-
-      // console.log("signer:::", signer)
-      // console.log("connectAccount --> correctChain:::", correctChain)
-
-      if (signer && correctChain) {
-        monsterContract = new Contract(ContractAddress, abi, signer)
-
-        try {
-          balance = ethers.utils.formatEther(await provider.getBalance(address))
-        } catch (error) {
-        }
-      }
-
-      await dispatch(
-        accountChanged({
-          address: address,
-          provider: provider,
-          web3modal: web3Modal,
-          needsOnboard: false,
-          correctChain: correctChain,
-          balance: balance,
-          monsterContract
-        })
-      )
-    } catch (error) {
-      captureException(error, {
-        extra: {
-          firstRun,
-          WEB3_CONNECT_CACHED_PROVIDER: localStorage.getItem(
-            'WEB3_CONNECT_CACHED_PROVIDER'
-          ),
-          DeFiLink_session_storage_extension: localStorage.getItem(
-            'DeFiLink_session_storage_extension'
-          )
-        }
-      })
-      if (firstRun) {
-        dispatch(appAuthInitFinished())
-      }
-      // console.log(error)
-      // console.log('Error connecting wallet!')
-      await web3Modal.clearCachedProvider()
-      dispatch(onLogout())
-    }
-    dispatch(connectingWallet({ connecting: false }))
+    //     await connector.activate();
+    //     let provider = await connector.getProvider();
+    //     return provider;
+    //   },
+    // },
   }
 
+  if (type !== 'defi') {
+    providerOptions.walletconnect = {
+      package: WalletConnectProvider, // required
+      options: {
+        chainId: defaultChainInfo.chainId, //cronos mainnet
+        rpc: {
+          25: defaultChainInfo.rpcUrls[0]
+        },
+        network: 'cronos',
+        metadata: {
+          icons: ['https://ebisusbay.com/vector%20-%20face.svg']
+        }
+      }
+    }
+    // console.log('provider:::', providerOptions.walletconnect)
+  }
+
+  // const web3ModalWillShowUp = !localStorage.getItem(
+  //   'WEB3_CONNECT_CACHED_PROVIDER'
+  // )
+
+  // if (process.env.NODE_ENV !== 'production') {
+  //   console.log('web3ModalWillShowUp: ', web3ModalWillShowUp)
+  // }
+
+  const web3Modal = new Web3Modal({
+    cacheProvider: true, // optional
+    providerOptions // required
+  })
+
+  const web3Provider = await web3Modal
+    .connect()
+    .then((web3Provider) => web3Provider)
+    .catch((error) => {
+      captureException(error, { extra: { firstRun } })
+      // console.log('Could not get a wallet connection', error)
+      return null
+    })
+
+  // console.log('web3Provider:::', web3Provider)
+
+  if (!web3Provider) {
+    dispatch(onLogout())
+    return
+  }
+
+  dispatch(setIsMetamask({ isMetamask: web3Provider.isMetaMask }))
+
+  try {
+    dispatch(connectingWallet({ connecting: true }))
+    const provider = new ethers.providers.Web3Provider(web3Provider)
+    const cid = await web3Provider.request({
+      method: 'net_version'
+    })
+    // console.log('cid:::', { cid, chainId: chainInfo.chainId })
+    const correctChain =
+      Number(cid) === chainInfo.chainId ||
+      Number(cid) === Number(chainInfo.chainId)
+    const accounts = await web3Provider.request({
+      method: 'eth_accounts',
+      params: [{ chainId: cid }]
+    })
+    // console.log("account:::", accounts[0])
+    const address = accounts[0]
+    const signer = provider.getSigner()
+    if (!correctChain) {
+      if (firstRun) {
+        dispatch(appAuthInitFinished())
+      }
+      await dispatch(setShowWrongChainModal(true))
+    }
+
+    await dispatch(
+      onBasicAccountData({
+        address: address,
+        provider: provider,
+        web3modal: web3Modal,
+        correctChain: correctChain,
+        needsOnboard: false,
+      })
+    )
+    if (firstRun) {
+      dispatch(appAuthInitFinished())
+    }
+    web3Provider.on('DeFiConnectorDeactivate', () => {
+      dispatch(onLogout())
+    })
+    web3Provider.on('disconnect', () => {
+      dispatch(onLogout())
+    })
+    web3Provider.on('accountsChanged', () => {
+      dispatch(onLogout())
+      dispatch(connectAccount())
+    })
+    web3Provider.on('DeFiConnectorUpdate', () => {
+      window.location.reload()
+    })
+    web3Provider.on('chainChanged', () => {
+      // Handle the new chain.
+      // Correctly handling chain changes can be complicated.
+      // We recommend reloading the page unless you have good reason not to.
+      window.location.reload()
+    })
+
+    let balance
+    let monsterContract
+
+    // console.log("signer:::", signer)
+    // console.log("connectAccount --> correctChain:::", correctChain)
+
+    if (signer && correctChain) {
+      monsterContract = new Contract(ContractAddress, abi, signer)
+
+      try {
+        balance = ethers.utils.formatEther(await provider.getBalance(address))
+      } catch (error) {
+      }
+    }
+
+    await dispatch(
+      onChangeAccount({
+        address: address,
+        provider: provider,
+        web3modal: web3Modal,
+        needsOnboard: false,
+        correctChain: correctChain,
+        balance: balance,
+        monsterContract
+      })
+    )
+  } catch (error) {
+    captureException(error, {
+      extra: {
+        firstRun,
+        WEB3_CONNECT_CACHED_PROVIDER: localStorage.getItem(
+          'WEB3_CONNECT_CACHED_PROVIDER'
+        ),
+        DeFiLink_session_storage_extension: localStorage.getItem(
+          'DeFiLink_session_storage_extension'
+        )
+      }
+    })
+    if (firstRun) {
+      dispatch(appAuthInitFinished())
+    }
+    // console.log(error)
+    // console.log('Error connecting wallet!')
+    await web3Modal.clearCachedProvider()
+    dispatch(onLogout())
+  }
+  dispatch(connectingWallet({ connecting: false }))
+}
+
 export const initProvider = () => async (dispatch) => {
+  console.log("initProvider func is called!!!")
   const ethereum = await detectEthereumProvider()
 
   if (ethereum == null || ethereum !== window.ethereum) {
@@ -319,7 +320,7 @@ export const initProvider = () => async (dispatch) => {
     provider.on('accountsChanged', (accounts) => {
       // console.log("dispatching accountsChanged with undefined contractAddress")
       dispatch(
-        accountChanged({
+        onChangeAccount({
           address: accounts[0]
         })
       )
@@ -329,7 +330,6 @@ export const initProvider = () => async (dispatch) => {
       // Handle the new chain.
       // Correctly handling chain changes can be complicated.
       // We recommend reloading the page unless you have good reason not to.
-
       window.location.reload()
     })
   }
@@ -393,5 +393,5 @@ export const updateBalance = () => async (dispatch, getState) => {
   const { user } = getState()
   const { address, provider } = user
   const balance = ethers.utils.formatEther(await provider.getBalance(address))
-  dispatch(userSlice.actions.balanceUpdated(balance))
+  dispatch(userSlice.actions.onUpdateBalance(balance))
 }
