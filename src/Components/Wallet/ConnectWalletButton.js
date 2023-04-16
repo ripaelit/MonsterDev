@@ -24,7 +24,8 @@ const ConnectWalletButton = () => {
     return state.user.needsOnboard
   })
 
-  const connectWalletPressed = async () => {
+  const handleConnectWalletPressed = async () => {
+    // console.log("connectWallet function is called!!!")
     if (needsOnboard) {
       const onboarding = new MetaMaskOnboarding()
       onboarding.startOnboarding()
@@ -34,9 +35,9 @@ const ConnectWalletButton = () => {
   }
 
   const handleWrongChain = () => {
+    // console.log("handleWrongChain function is called!!!")
     dispatch(setShowWrongChainModal(false))
     dispatch(chainConnect())
-    // console.log("handleWrongChain>>>")
   }
 
   const logout = async () => {
@@ -93,7 +94,7 @@ const ConnectWalletButton = () => {
         !walletAddress &&
         <button
           onClick={() => {
-            connectWalletPressed()
+            handleConnectWalletPressed()
           }}
           className="bg-primary px-4 py-2 cursor-pointer text-sm rounded-xl font-bold "
         >

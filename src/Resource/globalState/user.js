@@ -95,10 +95,10 @@ export const {
 } = userSlice.actions
 export const user = userSlice.reducer
 
-export const connectAccount =
-  (firstRun = false, type = '') =>
+export const connectAccount = (firstRun = false, type = '') =>
   async (dispatch) => {
     // console.log('currentPath:::', window.location.pathname)
+    // console.log("connectAccount function is called!!!")
     chainInfo = defaultChainConfig
     const providerOptions = {
       injected: {
@@ -139,9 +139,9 @@ export const connectAccount =
       providerOptions.walletconnect = {
         package: WalletConnectProvider, // required
         options: {
-          chainId: 25, //cronos mainnet
+          chainId: defaultChainConfig.chainId, //cronos mainnet
           rpc: {
-            25: 'https://evm-t3.cronos.org'
+            25: defaultChainConfig.rpcUrls[0]
           },
           network: 'cronos',
           metadata: {
@@ -337,6 +337,7 @@ export const initProvider = () => async (dispatch) => {
 
 export const chainConnect = (type) => async (dispatch) => {
   chainInfo = defaultChainConfig
+
   if (window.ethereum) {
     const cid = ethers.utils.hexValue(BigNumber.from(chainInfo.chainId))
     try {
