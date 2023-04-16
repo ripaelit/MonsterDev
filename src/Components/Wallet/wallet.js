@@ -3,18 +3,18 @@ import Web3 from "web3"
 import { ContractAddress } from '../../Resource/constants'
 
 // connect to metamask using web3
-export const connectWallet = async () => {
-  const { ethereum } = window;
-  if (ethereum) {
-    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-    console.log("Connected", accounts[0]);
-    return ethereum;
-  } else {
-    // create an alter
-    alert("Please install metamask");
-    return;
-  }
-}
+// export const connectWallet = async () => {
+//   const { ethereum } = window;
+//   if (ethereum) {
+//     const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+//     console.log("Connected", accounts[0]);
+//     return ethereum;
+//   } else {
+//     // create an alter
+//     alert("Please install metamask");
+//     return;
+//   }
+// }
 
 export const disconnectWallet = async () => {
   const { ethereum } = window;
@@ -59,22 +59,25 @@ export const isConnected = async () => {
 }
 
 // if network/chain is not cronos, then ask to switch network
-export const switchNetwork = async () => {
-  const { ethereum } = window;
-  if (ethereum) {
-    // cronos chainId: 338 ( testnet )
-    const chainId = await ethereum.request({ method: "eth_chainId" });
-    if (chainId !== "0x4") {
-      await ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x4" }] });
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    // create an alter
-    alert("Please install metamask");
-  }
-}
+// export const switchNetwork = async () => {
+//   const { ethereum } = window;
+//   if (ethereum) {
+//     // cronos chainId: 338 ( testnet )
+//     const chainId = await ethereum.request({ method: "eth_chainId" });
+//     if (chainId !== "0x4") {
+//       await ethereum.request({
+//         method: "wallet_switchEthereumChain",
+//         params: [{ chainId: "0x4" }],
+//       });
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   } else {
+//     // create an alter
+//     alert("Please install metamask");
+//   }
+// }
 
 export const getTokens = async () => {
   await connectContract();
