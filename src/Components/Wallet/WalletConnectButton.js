@@ -41,7 +41,7 @@ const buttonStyle = {
   justifyContent: 'space-between'
 }
 
-export default function KeepMountedModal(props) {
+export default function WalletListModal(props) {
   const handleClose = () => props.setOpen(false)
   let wallet = null
 
@@ -50,7 +50,7 @@ export default function KeepMountedModal(props) {
     props.setOpen(false)
     switch (connector) {
       case 'metamask':
-        wallet = await Metamask.connect()
+        wallet = await Metamask.connectMetamask()
         break
       case 'walletconnect':
         wallet = await WalletConnect.connect()
