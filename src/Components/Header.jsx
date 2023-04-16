@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Onboard from '@web3-onboard/core'
-import injectedModule from '@web3-onboard/injected-wallets'
+// import Onboard from '@web3-onboard/core'
+// import injectedModule from '@web3-onboard/injected-wallets'
 import {
   FaBars,
-  FaCross,
+  // FaCross,
   FaDiscord,
-  FaDoorClosed,
+  // FaDoorClosed,
   FaTwitter,
 } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
@@ -14,19 +14,19 @@ import { navLinks } from "../Resource/data";
 import Logo from "../Resource/images/logo.png";
 import ConnectWalletButton from './Wallet/ConnectWalletButton'
 
-const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
-const injected = injectedModule()
-const onboard = Onboard({
-  wallets: [injected],
-  chains: [
-    {
-      id: '0x1',
-      token: 'ETH',
-      label: 'Ethereum Mainnet',
-      rpcUrl: MAINNET_RPC_URL
-    }
-  ]
-})
+// const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
+// const injected = injectedModule()
+// const onboard = Onboard({
+//   wallets: [injected],
+//   chains: [
+//     {
+//       id: '0x1',
+//       token: 'ETH',
+//       label: 'Ethereum Mainnet',
+//       rpcUrl: MAINNET_RPC_URL
+//     }
+//   ]
+// })
 // const wallets = onboard.connectWallet()
 // console.log(wallets)
 
@@ -57,7 +57,7 @@ const Header = () => {
             {navLinks.map((link) => (
               <li className="hover:text-secondary transition ease-in-out" key={link.name}>
                 <Link
-                  className={link.path == pathname ? "text-secondary" : ""}
+                  className={link.path === pathname ? "text-secondary" : ""}
                   to={link.path}
                 >
                   {link.name}
@@ -103,7 +103,7 @@ const Header = () => {
                 key={link.name}
               >
                 <Link
-                  className={pathname == link.path ? "text-primary" : ""}
+                  className={pathname === link.path ? "text-primary" : ""}
                   to={link.path}
                 >
                   {link.name}
