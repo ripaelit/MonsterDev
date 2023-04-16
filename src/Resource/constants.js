@@ -16,6 +16,7 @@
 
 // Mainnet Cronos
 export const ContractAddress = '0x8f2836874DC85B81C2CF0421aF593E6E8d5DffA1'
+
 export const defaultChainConfig = {
   chainId: "0x19",
   chainName: "Cronos Mainnet Beta",
