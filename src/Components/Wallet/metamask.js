@@ -14,8 +14,8 @@ export const switchNetwork = async () => {
       method: "wallet_switchEthereumChain",
       params: [{ chainId: defaultChainConfig.chainId }],
     });
-  } catch (e) {
-    // console.log(e);
+  } catch (err) {
+    // console.log(err);
     await window.ethereum.request({
       method: "wallet_addEthereumChain",
       params: [
@@ -31,9 +31,11 @@ export const switchNetwork = async () => {
   }
 };
 
-export const connect = async () => {
+// connect to metamask using web3
+export const connectMetamask = async () => {
+  // console.log("this function is called>>>")
   try {
-    let chainId = await window.ethereum.request({ method: "eth_chainId" });
+    const chainId = await window.ethereum.request({ method: "eth_chainId" });
     if (!(chainId === defaultChainConfig.chainId)) {
       await switchNetwork();
       await delay(2000);
@@ -58,8 +60,8 @@ export const connect = async () => {
         await window.ethereum.request({ method: "eth_chainId" })
       ),
     };
-  } catch (e) {
-    // console.log("error:", e);
+  } catch (err) {
+    // console.log("metamask connect error:::", err);
     return null;
   }
 };
