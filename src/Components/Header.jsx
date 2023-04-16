@@ -37,6 +37,7 @@ const Header = () => {
 
   return (
     <div className="bg-secondaryDark fixed w-full shadow-xl">
+      {/* desktop */}
       <div className="z-50 flex items-center justify-between py-5  text-white container mx-auto px-4 md:px-0">
         <div className="text-primary uppercase font-bold text-xl">
           <Link to="/" className="flex items-center justify-center gap-3">
@@ -86,7 +87,7 @@ const Header = () => {
           <ConnectWalletButton />
         </div>
       </div>
-
+      {/* mobile */}
       <div
         className={
           showMobMenu
@@ -121,9 +122,10 @@ const Header = () => {
               </a>
             </li>
           </ul>
-          <div className="bg-secondary text-black px-4 py-2 cursor-pointer text-sm rounded-xl font-bold ">
+          {/* <div className="bg-secondary text-black px-4 py-2 cursor-pointer text-sm rounded-xl font-bold ">
             Connect Wallet
-          </div>
+          </div> */}
+          <ConnectWalletButton />
         </div>
       </div>
     </div>
