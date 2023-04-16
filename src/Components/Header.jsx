@@ -37,7 +37,7 @@ const Header = () => {
 
   return (
     <div className="bg-secondaryDark fixed w-full shadow-xl">
-      {/* desktop */}
+      {/* for desktop */}
       <div className="z-50 flex items-center justify-between py-5  text-white container mx-auto px-4 md:px-0">
         <div className="text-primary uppercase font-bold text-xl">
           <Link to="/" className="flex items-center justify-center gap-3">
@@ -66,12 +66,12 @@ const Header = () => {
               </li>
             ))}
             <li key="discord-desktop">
-              <a href="https://discord.com/invite/UHhgPsfny5" target="_blank">
+              <a href="https://discord.com/invite/UHhgPsfny5" target="_blank" rel="noreferrer">
                 <FaDiscord className="text-3xl hover:text-indigo-600 transition ease-in-out" />
               </a>
             </li>
             <li key="twitter-desktop">
-              <a href="https://twitter.com/CrazzzyMonsters" target="_blank">
+              <a href="https://twitter.com/CrazzzyMonsters" target="_blank" rel="noreferrer">
                 <FaTwitter className="text-3xl hover:text-blue-600 transition ease-in-out" />
               </a>
             </li>
@@ -87,7 +87,8 @@ const Header = () => {
           <ConnectWalletButton />
         </div>
       </div>
-      {/* mobile */}
+
+      {/* for mobile */}
       <div
         className={
           showMobMenu
