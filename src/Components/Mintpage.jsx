@@ -63,7 +63,8 @@ const Mintpage = () => {
     const balance = (await nftContract.balanceOf(walletAddress.toString())).toString()
     const mintValue = (await nftContract.quoteMintValue(mintCount)).toString()
     if ((new BigNumber(balance)).lt(new BigNumber(mintValue))) {
-      console.log("Not enough balance")
+      // console.log("Not enough balance")
+      window.alert("Your balance is insufficient.")
     }
     const gasEstimated = await nftContract.estimateGas.mint(
       mintCount,
