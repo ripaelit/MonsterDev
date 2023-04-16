@@ -1,8 +1,12 @@
-import { applyMiddleware, compose, createStore, combineReducers } from 'redux';
+import {
+  // applyMiddleware,
+  // createStore,
+  combineReducers,
+} from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import * as Sentry from '@sentry/react';
-import createSentryMiddleware from 'redux-sentry-middleware';
+// import thunk from 'redux-thunk';
+// import * as Sentry from '@sentry/react';
+// import createSentryMiddleware from 'redux-sentry-middleware';
 
 import { appInitializeStateReducer } from './globalState/initSlice';
 import { user } from './globalState/user';
@@ -14,11 +18,11 @@ const rootReducer = combineReducers({
 
 // const reduxDevToolsComposeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const sentryEnhancedMiddlewares = applyMiddleware(thunk, createSentryMiddleware(Sentry, {}));
+// const sentryEnhancedMiddlewares = applyMiddleware(thunk, createSentryMiddleware(Sentry, {}));
 
 // const enableDevTools = process.env.NODE_ENV !== 'production' || process.env.REACT_APP_DEVTOOLS === 'true';
 
-const reduxDevToolsEnhancedMiddlewares = sentryEnhancedMiddlewares;
+// const reduxDevToolsEnhancedMiddlewares = sentryEnhancedMiddlewares;
 
 // const store = createStore(rootReducer, reduxDevToolsEnhancedMiddlewares);
 const store = configureStore({ reducer: rootReducer });
