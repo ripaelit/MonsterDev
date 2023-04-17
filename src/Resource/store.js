@@ -9,10 +9,10 @@ import { configureStore } from '@reduxjs/toolkit';
 // import createSentryMiddleware from 'redux-sentry-middleware';
 
 import { appInitializeStateReducer } from './globalState/initSlice';
-import { user } from './globalState/user';
+import { userReducer } from './globalState/user';
 
 const rootReducer = combineReducers({
-  user: user,
+  user: userReducer,
   appInitialize: appInitializeStateReducer,
 });
 

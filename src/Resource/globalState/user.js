@@ -97,7 +97,7 @@ export const {
   onUpdateBalance,
 } = userSlice.actions
 
-export const user = userSlice.reducer
+export const userReducer = userSlice.reducer
 
 export const connectAccount = (firstRun = false, type = '') => async (dispatch) => {
   // console.log("connectAccount func is called!!!")
