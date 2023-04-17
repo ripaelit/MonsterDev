@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux';
-import Nft from "../Resource/images/Nft.jpg";
-import { ethers } from "ethers";
+import { useSelector } from 'react-redux'
+import Nft from '../Resource/images/Nft.jpg'
+import { ethers } from 'ethers'
+import Web3 from 'web3'
 import BigNumber from 'bignumber.js'
 
 const Mintpage = () => {
@@ -60,14 +61,14 @@ const Mintpage = () => {
     if (!nftContract || !walletAddress || !provider) {
       return
     }
-    const balance = (await nftContract.balanceOf(walletAddress.toString())).toString()
-    const totalMintValue = (await nftContract.quotetotalMintValue(mintCount)).toString()
-    // const balanceInEth= ethers.utils.formatEther(balanceInWei);
-    console.log("nftContract:::", nftContract)
-    console.log("walletAddress:::", walletAddress)
-    console.log("totalMintValue:::", totalMintValue)
-    console.log("balance:::", balance)
-    if ((new BigNumber(balance)).lt(new BigNumber(totalMintValue))) {
+    const totalMintPrice = (await nftContract.quoteMintValue(mintCount)).toString()
+    const web3 = new Web3(window.ethereum)
+    const balanceNative = await web3.eth.getBalance(walletAddress)
+    // console.log("nftContract:::", nftContract)
+    // console.log("walletAddress:::", walletAddress)
+    // console.log("totalMintPrice:::", totalMintPrice)
+    // console.log("balanceNative:::", balanceNative)
+    if ((new BigNumber(balanceNative)).lt(new BigNumber(totalMintPrice))) {
       // console.log("Not enough balance")
       window.alert("Your balance is insufficient.")
       return
@@ -75,12 +76,12 @@ const Mintpage = () => {
     const gasEstimated = await nftContract.estimateGas.mint(
       mintCount,
       {
-        value: totalMintValue
+        value: totalMintPrice
       }
     )
     const gas = Math.ceil(gasEstimated.toNumber() * 2)
     const tx = await nftContract.mint(mintCount, {
-      value: totalMintValue,
+      value: totalMintPrice,
       gasLimit: gas
     })
     await tx.wait()
