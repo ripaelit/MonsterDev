@@ -101,8 +101,7 @@ const Mintpage = () => {
         <div className="text-center pb-6 space-y-4">
           <div className="text-3xl">
           <div className="text-3xl">
-            <span className="font-bold text-secondary">Minted : </span>
-            <span>{supply}</span>
+          <span className="font-bold text-secondary">Minted: {supply}/10000</span>
           </div>
           </div>
           <div className="text-3xl">
@@ -172,10 +171,10 @@ const Mintpage = () => {
                 </tr>
                 <tr className="border-t border-opacity-50">
                 <td className="py-3 pl-3">
-                  <p className="font-semibold "></p>
+                  <p className="font-semibold ">Contract Address</p>
                 </td>
                 <td>
-                  <p className="font-semibold "></p>
+                  <a target='_blank' rel="noreferrer" href='https://cronoscan.com/address/0x8f2836874dc85b81c2cf0421af593e6e8d5dffa1'>0x8f28...dffa1</a>
                 </td>
                 </tr>
               </tbody>
