@@ -1,5 +1,5 @@
-import abi from "../../Resource/abi.json";
-import Web3 from "web3"
+import abi from '../../Resource/abi.json'
+import Web3 from 'web3'
 import { ContractAddress } from '../../Resource/constants'
 
 // connect to metamask using web3

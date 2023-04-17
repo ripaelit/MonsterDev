@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getTokens } from '../Resource/helpers/wallet'
+import { getTokens } from './Wallet/wallet'
 
 const NftViewerpage = () => {
   const [tokens, setTokens] = useState([])
