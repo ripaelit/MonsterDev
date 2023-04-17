@@ -24,7 +24,7 @@ const Mintpage = () => {
     if (!nftContract || !walletAddress || !provider) {
       return
     }
-    
+
     const _supply = (await nftContract.totalSupply()).toString()
     setSupply(_supply)
 
@@ -61,20 +61,26 @@ const Mintpage = () => {
       return
     }
     const balance = (await nftContract.balanceOf(walletAddress.toString())).toString()
-    const mintValue = (await nftContract.quoteMintValue(mintCount)).toString()
-    if ((new BigNumber(balance)).lt(new BigNumber(mintValue))) {
+    const totalMintValue = (await nftContract.quotetotalMintValue(mintCount)).toString()
+    // const balanceInEth= ethers.utils.formatEther(balanceInWei);
+    console.log("nftContract:::", nftContract)
+    console.log("walletAddress:::", walletAddress)
+    console.log("totalMintValue:::", totalMintValue)
+    console.log("balance:::", balance)
+    if ((new BigNumber(balance)).lt(new BigNumber(totalMintValue))) {
       // console.log("Not enough balance")
       window.alert("Your balance is insufficient.")
+      return
     }
     const gasEstimated = await nftContract.estimateGas.mint(
       mintCount,
       {
-        value: mintValue
+        value: totalMintValue
       }
     )
     const gas = Math.ceil(gasEstimated.toNumber() * 2)
     const tx = await nftContract.mint(mintCount, {
-      value: mintValue,
+      value: totalMintValue,
       gasLimit: gas
     })
     await tx.wait()
