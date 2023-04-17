@@ -113,7 +113,7 @@ export const connectAccount = (firstRun = false, type = '') => async (dispatch) 
     },
     'custom-defiwallet': {
       display: {
-        logo: '/assets/defiwallet.svg',
+        logo: '/assets/defiwallet.png',
         name: 'Crypto.com DeFi Wallet',
         description: 'Connect with the CDC DeFi Wallet',
       },
