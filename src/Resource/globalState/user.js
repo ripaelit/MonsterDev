@@ -19,7 +19,7 @@ const userSlice = createSlice({
     provider: null,
     address: null,
     web3modal: null,
-    connectingWallet: false,
+    onConnectingWallet: false,
     gettingContractData: true,
     needsOnboard: false,
     // Contract
@@ -56,15 +56,15 @@ const userSlice = createSlice({
       state.correctChain = action.payload.correctChain
       state.needsOnboard = action.payload.needsOnboard
     },
-    connectingWallet(state, action) {
-      state.connectingWallet = action.payload.connecting
+    onConnectingWallet(state, action) {
+      state.onConnectingWallet = action.payload.connecting
     },
     setShowWrongChainModal(state, action) {
       state.showWrongChainModal = action.payload
     },
     onLogout(state) {
       // console.log('onLogout:::')
-      state.connectingWallet = false
+      state.onConnectingWallet = false
       const web3Modal = new Web3Modal({
         cacheProvider: false, // optional
         providerOptions: [] // required
@@ -91,7 +91,7 @@ export const {
   onCorrectChain,
   onProvider,
   onBasicAccountData,
-  connectingWallet,
+  onConnectingWallet,
   setShowWrongChainModal,
   onLogout,
   onUpdateBalance,
@@ -186,7 +186,7 @@ export const connectAccount = (firstRun = false, type = '') => async (dispatch) 
   dispatch(setIsMetamask({ isMetamask: web3Provider.isMetaMask }))
 
   try {
-    dispatch(connectingWallet({ connecting: true }))
+    dispatch(onConnectingWallet({ connecting: true }))
     const provider = new ethers.providers.Web3Provider(web3Provider)
     const cid = await web3Provider.request({
       method: 'net_version'
@@ -287,7 +287,7 @@ export const connectAccount = (firstRun = false, type = '') => async (dispatch) 
     await web3Modal.clearCachedProvider()
     dispatch(onLogout())
   }
-  dispatch(connectingWallet({ connecting: false }))
+  dispatch(onConnectingWallet({ connecting: false }))
 }
 
 export const initProvider = () => async (dispatch) => {
