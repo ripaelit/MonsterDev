@@ -32,7 +32,7 @@ const userSlice = createSlice({
   reducers: {
     onChangeAccount(state, action) {
       state.balance = action.payload.balance
-      // TODO: QUICKFIX. Need to make as independent reducers later.
+      // TODO: Need to make as independent reducers later.
       if (action.payload.monsterContract)
         state.monsterContract = action.payload.monsterContract
     },
@@ -67,7 +67,7 @@ const userSlice = createSlice({
       state.onConnectingWallet = false
       const web3Modal = new Web3Modal({
         cacheProvider: false, // optional
-        providerOptions: [] // required
+        providerOptions: [], // required
       })
       web3Modal.clearCachedProvider()
       if (state.web3modal != null) {
@@ -164,7 +164,14 @@ export const connectAccount = (firstRun = false, type = '') => async (dispatch) 
 
   const web3Modal = new Web3Modal({
     cacheProvider: true, // optional
-    providerOptions // required
+    providerOptions, // required
+    theme: {
+      background: "rgb(39, 49, 56)",
+      main: "rgb(199, 199, 199)",
+      secondary: "rgb(136, 136, 136)",
+      border: "rgba(195, 195, 195, 0.14)",
+      hover: "rgb(16, 26, 32)"
+    },
   })
 
   const web3Provider = await web3Modal
