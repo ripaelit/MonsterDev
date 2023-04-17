@@ -3,6 +3,8 @@ import { Contract, ethers, BigNumber } from 'ethers'
 import Web3Modal from 'web3modal'
 import detectEthereumProvider from '@metamask/detect-provider'
 import WalletConnectProvider from '@walletconnect/web3-provider'
+import { DeFiWeb3Connector } from 'deficonnect'
+import * as DefiWalletConnectProvider from '@deficonnect/web3-provider'
 import { appAuthInitFinished } from './initSlice'
 import { captureException } from '@sentry/react'
 import abi from '../abi.json'
@@ -109,30 +111,30 @@ export const connectAccount = (firstRun = false, type = '') => async (dispatch) 
       },
       package: null
     },
-    // 'custom-defiwallet': {
-    //   display: {
-    //     logo: '/assets/cdc_logo.svg',
-    //     name: 'Crypto.com DeFi Wallet',
-    //     description: 'Connect with the CDC DeFi Wallet',
-    //   },
-    //   options: {},
-    //   package: DefiWalletConnectProvider,
-    //   connector: async (ProviderPackage, options) => {
-    //     const connector = new DeFiWeb3Connector({
-    //       supportedChainIds: [25, 338],
-    //       rpc: { 25: 'https://gateway.nebkas.ro', 338: 'https://cronos-testnet-3.crypto.org:8545/' },
-    //       pollingInterval: 15000,
-    //       metadata: {
-    //         icons: ['https://ebisusbay.com/vector%20-%20face.svg'],
-    //         description: 'Cronos NFT Marketplace',
-    //       },
-    //     });
+    'custom-defiwallet': {
+      display: {
+        logo: '/assets/cdc_logo.svg',
+        name: 'Crypto.com DeFi Wallet',
+        description: 'Connect with the CDC DeFi Wallet',
+      },
+      options: {},
+      package: DefiWalletConnectProvider,
+      connector: async (ProviderPackage, options) => {
+        const connector = new DeFiWeb3Connector({
+          supportedChainIds: [25, 338],
+          rpc: { 25: 'https://gateway.nebkas.ro', 338: 'https://cronos-testnet-3.crypto.org:8545/' },
+          pollingInterval: 15000,
+          metadata: {
+            icons: ['https://ebisusbay.com/vector%20-%20face.svg'],
+            description: 'Cronos NFT Marketplace',
+          },
+        });
 
-    //     await connector.activate();
-    //     let provider = await connector.getProvider();
-    //     return provider;
-    //   },
-    // },
+        await connector.activate();
+        let provider = await connector.getProvider();
+        return provider;
+      },
+    },
   }
 
   if (type !== 'defi') {
