@@ -25,6 +25,9 @@ const rootReducer = combineReducers({
 // const reduxDevToolsEnhancedMiddlewares = sentryEnhancedMiddlewares;
 
 // const store = createStore(rootReducer, reduxDevToolsEnhancedMiddlewares);
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({ 
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+});
 
 export default store;
