@@ -17,22 +17,22 @@ import { ContractAddress } from '../../Resource/constants'
 // }
 
 export const disconnectWallet = async () => {
-  const { ethereum } = window;
+  const { ethereum } = window
   if (ethereum) {
-    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-    console.log("Disconnected", accounts[0]);
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" })
+    console.log("Disconnected", accounts[0])
   } else {
     // create an alter
-    alert("Please install metamask");
+    alert("Please install metamask")
   }
 }
 
 // connect to a specific smart contract on cronos network
 export const connectContract = async () => {
-  const { ethereum } = window;
-  const web3 = new Web3(ethereum);
+  const { ethereum } = window
+  const web3 = new Web3(ethereum)
   if (ethereum) {
-    window.contract = await new web3.eth.Contract(abi, ContractAddress);
+    window.contract = await new web3.eth.Contract(abi, ContractAddress)
 
     //set up your Ethereum transaction
 
@@ -40,21 +40,21 @@ export const connectContract = async () => {
     return window.contract;
   } else {
     // create an alter
-    alert("Please install metamask");
+    alert("Please install metamask")
   }
 }
 
 // check if wallet is connected ( metamask )
 export const isConnected = async () => {
-  const { ethereum } = window;
+  const { ethereum } = window
   if (ethereum) {
-    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-    console.log("Connected", accounts[0]);
-    return true;
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" })
+    console.log("Connected", accounts[0])
+    return true
   } else {
     // create an alter
-    alert("Please install metamask");
-    return false;;
+    alert("Please install metamask")
+    return false
   }
 }
 
@@ -80,12 +80,12 @@ export const isConnected = async () => {
 // }
 
 export const getTokens = async () => {
-  await connectContract();
+  await connectContract()
   const currentWalletAddress = window.ethereum.selectedAddress
-  console.log("currentWalletAddress:::", window.ethereum.selectedAddress);
-  const tokenIds = await window.contract.methods.walletOfOwner(currentWalletAddress).call();
+  console.log("currentWalletAddress:::", currentWalletAddress)
+  const tokenIds = await window.contract.methods.walletOfOwner(currentWalletAddress).call()
   console.log("tokens:::", tokenIds)
-  return tokenIds;
+  return tokenIds
 }
 
 // mint x number of nfts
