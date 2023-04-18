@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react"
+import { Link, useLocation } from "react-router-dom"
 // import Onboard from '@web3-onboard/core'
 // import injectedModule from '@web3-onboard/injected-wallets'
 import {
@@ -9,9 +9,9 @@ import {
   // FaDoorClosed,
   FaTwitter,
 } from "react-icons/fa";
-import { AiOutlineClose } from "react-icons/ai";
-import { navLinks } from "../Resource/data";
-import Logo from "../Resource/images/logo.png";
+import { AiOutlineClose } from "react-icons/ai"
+import { navLinks } from "../Resource/data"
+import Logo from "../Resource/images/logo.png"
 import ConnectWalletButton from './Wallet/ConnectWalletButton'
 
 // const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
@@ -31,9 +31,9 @@ import ConnectWalletButton from './Wallet/ConnectWalletButton'
 // console.log(wallets)
 
 const Header = () => {
-  const pathname = useLocation().pathname;
-  const [showMobMenu, setShowMobMenu] = useState(false);
-  const handleMenuClick = () => setShowMobMenu((prev) => !prev);
+  const pathname = useLocation().pathname
+  const [showMobMenu, setShowMobMenu] = useState(false)
+  const handleMenuClick = () => setShowMobMenu((prev) => !prev)
 
   return (
     <div className="bg-secondaryDark fixed w-full shadow-xl">
