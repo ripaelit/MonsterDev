@@ -1,5 +1,5 @@
 
-// Testnet Cronos
+// Testnet Cronos for local test
 // export const ContractAddress = '0xf71d138Fc195f40785EEEAf1259C3A0eb48C6549'
 
 // export const defaultChainInfo = {
@@ -15,7 +15,7 @@
 //   }
 // }
 
-// Mainnet Cronos
+// Mainnet Cronos for live page
 export const ContractAddress = '0x8f2836874DC85B81C2CF0421aF593E6E8d5DffA1'
 
 export const defaultChainInfo = {
