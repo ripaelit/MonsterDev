@@ -106,7 +106,7 @@ const Mintpage = () => {
           </div>
           <div className="text-3xl">
             <span className="font-bold text-secondary">Current Price : </span>
-            <span>{mintPrice} CRO</span>
+            <span>{mintPrice * mintCount} CRO</span>
           </div>
           <div>
           <div className='flex flex-row items-center justify-center gap-6 pt-4 pb-4'>
