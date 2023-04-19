@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { getTokens } from './Wallet/wallet'
 
 const NftViewerpage = () => {
   const [tokens, setTokens] = useState([])
@@ -14,9 +13,7 @@ const NftViewerpage = () => {
   })
 
   const updateTokens = async () => {
-    console.log("updateTokens", {nftContract}, {walletAddress})
     const tokenIds = await nftContract.walletOfOwner(walletAddress.toString())
-    console.log({tokenIds})
     setTokens(tokenIds)
   }
 
