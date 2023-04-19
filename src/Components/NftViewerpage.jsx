@@ -13,6 +13,9 @@ const NftViewerpage = () => {
   })
 
   const updateTokens = async () => {
+    if (!walletAddress || !nftContract) {
+      return;
+    }
     const tokenIds = await nftContract.walletOfOwner(walletAddress.toString())
     setTokens(tokenIds)
   }
