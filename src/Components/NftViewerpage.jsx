@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { getTokens } from './Wallet/wallet'
 
 const NftViewerpage = () => {
   const [tokens, setTokens] = useState([])
 
+  const walletAddress = useSelector((state) => {
+    return state.user.address
+  })
+
+  const nftContract = useSelector((state) => {
+    return state.user.monsterContract
+  })
+
+  const updateTokens = async () => {
+    console.log("updateTokens", {nftContract}, {walletAddress})
+    const tokenIds = await nftContract.walletOfOwner(walletAddress.toString())
+    console.log({tokenIds})
+    setTokens(tokenIds)
+  }
+
   useEffect(() => {
-    getTokens().then((_tokens) => {
-      setTokens(_tokens);
-    })
-  }, [])
+    updateTokens()
+  }, [walletAddress, nftContract])
 
   return (
     <div className={tokens.length > 18 ? 'flex items-center justify-center flex-col h-auto pt-32 pb-32' : 'flex items-center justify-center flex-col h-screen pt-32 pb-32'}>
@@ -20,13 +34,13 @@ const NftViewerpage = () => {
         {
           // walletNfts.map((wnft) => (
           tokens.length > 0 ? tokens.map((tokenId) => (
-            <div key={tokenId} className='relative'>
+            <div key={Number(tokenId)} className='relative'>
               <img
-                src={`https://crazymonsters.s3.amazonaws.com/CrazyMonsterImages/${tokenId}.png`} 
+                src={`https://crazymonsters.s3.amazonaws.com/CrazyMonsterImages/${Number(tokenId)}.png`} 
                 alt="nft"
                 className='w-32 rounded-xl shadow-xl -z-10'
               />
-              <span className='absolute top-0 px-3 py-1 bg-slate-700 bg-opacity-70 rounded-xl'>{tokenId}</span>
+              <span className='absolute top-0 px-3 py-1 bg-slate-700 bg-opacity-70 rounded-xl'>{Number(tokenId)}</span>
             </div>
           ))
           :
