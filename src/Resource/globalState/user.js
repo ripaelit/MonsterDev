@@ -22,6 +22,7 @@ const userSlice = createSlice({
     onConnectingWallet: false,
     gettingContractData: true,
     needsOnboard: false,
+    balance: null,
     // Contract
     monsterContract: null,
     correctChain: false,
@@ -165,13 +166,13 @@ export const connectAccount = (firstRun = false, type = '') => async (dispatch) 
   const web3Modal = new Web3Modal({
     cacheProvider: true, // optional
     providerOptions, // required
-    theme: {
-      background: "rgb(39, 49, 56)",
-      main: "rgb(199, 199, 199)",
-      secondary: "rgb(136, 136, 136)",
-      border: "rgba(195, 195, 195, 0.14)",
-      hover: "rgb(16, 26, 32)"
-    },
+    // theme: {
+    //   background: "rgb(39, 49, 56)",
+    //   main: "rgb(199, 199, 199)",
+    //   secondary: "rgb(136, 136, 136)",
+    //   border: "rgba(195, 195, 195, 0.14)",
+    //   hover: "rgb(16, 26, 32)"
+    // },
   })
 
   const web3Provider = await web3Modal
